@@ -19,7 +19,14 @@
 # Project Details
 An complete ecosystem for Aashas boutique where the could manage all their digital needs in simple touch of a button.
 
->Version: **1.0**
+>**Tech Stack :**<br>
+>Backend: **[Node.JS](), [Express.JS]()**<br>
+>Frontend-Web: **[React]()**<br>
+>Frontend-Mobile: **[Flutter]()**<br>
+>Database: **[Mongo DB]()**<br>
+>Libraries: **[Redux](), [Node Mailer](), [Bcrypt](), [Express-Validator](), [Axios](), [JSON Web Token](), [Mongoose](), [Colors]()**<br>
+>Version: **1.0**<br>
+
 
 
 
