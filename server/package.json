@@ -1,0 +1,23 @@
+{
+  "name": "aashas-rest-server",
+  "version": "1.0.0",
+  "description": "Aashas Boutique's Backend server with all the api integration.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "sriram",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^5.0.0",
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.22"
+  }
+}
