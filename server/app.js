@@ -3,6 +3,19 @@ const colors = require('colors');
 
 const connectDB = require('./config/mongoDB');
 
+//Routes
+const usersRoute = require('./Routes/api/v1/users');
+const otpRoute = require('./Routes/api/v1/otp');
+const productsRoute = require('./Routes/api/v1/products');
+const customProductsRoute = require('./Routes/api/v1/customProducts');
+const cartRoute = require('./Routes/api/v1/cart');
+const favouritesRoute = require('./Routes/api/v1/favourites');
+const bannerRoute = require('./Routes/api/v1/salesBanner');
+const ordersRoute = require('./Routes/api/v1/orders');
+const desingerRoute = require('./Routes/api/v1/designer');
+
+//Middleware
+const errorHandler = require('./middleware/errorHandling');
 colors.setTheme({
   silly: 'rainbow',
   input: 'grey',
@@ -20,9 +33,20 @@ const app = express();
 
 const port = process.env.PORT;
 
-app.use((req, res) => {
-  res.send('<h2>Welcome to the Rest api server</h2>');
+app.use('/api/v1/users', usersRoute);
+app.use('/api/v1/otp', otpRoute);
+app.use('/api/v1/products', productsRoute);
+app.use('/api/v1/custom-products', customProductsRoute);
+app.use('/api/v1/cart', cartRoute);
+app.use('/api/v1/favourites', favouritesRoute);
+app.use('/api/v1/sales-banner', bannerRoute);
+app.use('/api/v1/orders', ordersRoute);
+app.use('/api/v1/designer', desingerRoute);
+app.use((req, res, next) => {
+  next(error);
 });
+app.use(errorHandler);
+
 console.clear();
 connectDB()
   .then(() => {

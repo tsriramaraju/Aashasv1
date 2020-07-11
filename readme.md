@@ -63,10 +63,10 @@ The folowing are the rest api endpoints for the URL
 |  Mobile login   |  POST  | public  | /users/login-mobile    |       user JSON data        | user details with jwt |
 | Forgot password |  POST  | public  | /users/forgot-password | user-email/mobile JSON data |          OTP          |
 | Password reset  |  POST  | public  | /users/reset-password  |        OTP JSON data        | message- sucess/fail  |
-|   Update user   |  POST  | private | /users/update          |       user JSON data        | message- sucess/fail  |
-|  Add  address   |  POST  | private | /users/address         |       user JSON data        | message- sucess/fail  |
-| Remove  address | DELETE | private | /users/address/:id     |                             | message- sucess/fail  |
-|  Remove  user   | DELETE | private | /users/                |                             | message- sucess/fail  |
+|   Update user   |  POST  |  user   | /users/update          |       user JSON data        | message- sucess/fail  |
+|  Add  address   |  POST  |  user   | /users/address         |       user JSON data        | message- sucess/fail  |
+| Remove  address | DELETE |  user   | /users/address/:id     |                             | message- sucess/fail  |
+|  Remove  user   | DELETE |  user   | /users                 |                             | message- sucess/fail  |
 
 <br>
 
@@ -81,70 +81,70 @@ The folowing are the rest api endpoints for the URL
 ### **Product's** Related API
 |            Name            |  Type  | Privacy | End point                       |      Payload       |       Response       |
 | :------------------------: | :----: | :-----: | :------------------------------ | :----------------: | :------------------: |
-|       Create product       |  POST  | private | /products                       | product JSON data  | message- sucess/fail |
+|       Create product       |  POST  |  admin  | /products                       | product JSON data  | message- sucess/fail |
 |        Get products        |  GET   | public  | /products                       |                    |  Array of  products  |
-|       Update product       |  PUT   | private | /products/:id                   | products JSON data | message- sucess/fail |
-|       Delete product       | DELETE | private | /products/:id                   |                    | message- sucess/fail |
+|       Update product       |  PUT   |  admin  | /products/:id                   | products JSON data | message- sucess/fail |
+|       Delete product       | DELETE |  admin  | /products/:id                   |                    | message- sucess/fail |
 |    Get trendy products     |  GET   | public  | /products/trend                 |                    |  Array of  products  |
 |   Get designer products    |  GET   | public  | /products/designer              |                    |  Array of  products  |
-|      Add offer to all      |  PUT   | private | /products/offer-create          |  offer JSON data   | message- sucess/fail |
-|   Remove offer from all    |  PUT   | private | /products/offer-remove          |  offer JSON data   | message- sucess/fail |
-|   Add offer to category    |  PUT   | private | /products/offer-create-specific |  offer JSON data   | message- sucess/fail |
-| Remove offer from category |  PUT   | private | /products/offer-remove-specific |  offer JSON data   | message- sucess/fail |
+|      Add offer to all      |  PUT   |  admin  | /products/offer-create          |  offer JSON data   | message- sucess/fail |
+|   Remove offer from all    |  PUT   |  admin  | /products/offer-remove          |  offer JSON data   | message- sucess/fail |
+|   Add offer to category    |  PUT   |  admin  | /products/offer-create-specific |  offer JSON data   | message- sucess/fail |
+| Remove offer from category |  PUT   |  admin  | /products/offer-remove-specific |  offer JSON data   | message- sucess/fail |
 <br>
 
 ### **Custom-Product's** Related API
 |          Name          |  Type  | Privacy | End point            |      Payload       |       Response       |
 | :--------------------: | :----: | :-----: | :------------------- | :----------------: | :------------------: |
-| Request custom product |  POST  | private | /custom-products     | product JSON data  | message- sucess/fail |  |
-| Get my custom products |  GET   | private | /custom-products     |                    |  Array of  products  |
-| Respond custom product |  PUT   | private | /custom-products/:id | products JSON data | message- sucess/fail |
-| Delete custom product  | DELETE | private | /custom-products/:id |                    | message- sucess/fail |
+| Request custom product |  POST  |  user   | /custom-products     | product JSON data  | message- sucess/fail |  |
+| Get my custom products |  GET   |  user   | /custom-products     |                    |  Array of  products  |
+| Respond custom product |  PUT   |  admin  | /custom-products/:id | products JSON data | message- sucess/fail |
+| Delete custom product  | DELETE |  admin  | /custom-products/:id |                    | message- sucess/fail |
 <br>
 
 ### **Shopping Cart** Related API
 |       Name       |  Type  | Privacy | End point |    Payload     |       Response       |
 | :--------------: | :----: | :-----: | :-------- | :------------: | :------------------: |
-|   Add to cart    |  POST  | private | /cart     | cart JSON data | message- sucess/fail |
-|     Get cart     |  GET   | private | /cart     |                | Array of cart items  |
-|    Clear cart    | DELETE | private | /cart     |                | message- sucess/fail |
-| Remove from cart | DELTE  | private | /cart/:id |                | message- sucess/fail |
+|   Add to cart    |  POST  |  user   | /cart     | cart JSON data | message- sucess/fail |
+|     Get cart     |  GET   |  user   | /cart     |                | Array of cart items  |
+|    Clear cart    | DELETE |  user   | /cart     |                | message- sucess/fail |
+| Remove from cart | DELTE  |  user   | /cart/:id |                | message- sucess/fail |
 <br>
 
 ### **Favourite's** Related API
 |       Name        | Type  | Privacy | End point   |       Payload        |       Response       |
 | :---------------: | :---: | :-----: | :---------- | :------------------: | :------------------: |
-| Toggle favourites | POST  | private | /favourites | favourites JSON data | message- sucess/fail |
-|  Get favourites   |  GET  | private | /favourites |                      |  Array of products   |
+| Toggle favourites | POST  |  user   | /favourites | favourites JSON data | message- sucess/fail |
+|  Get favourites   |  GET  |  user   | /favourites |                      |  Array of products   |
 <br>
 
 ### **Sales Banner** Related API
 |        Name         |  Type  | Privacy | End point         |     Payload      |       Response       |
 | :-----------------: | :----: | :-----: | :---------------- | :--------------: | :------------------: |
-| Create sales-banner |  POST  | private | /sales-banner     | banner JSON data | message- sucess/fail |
-|  Get sales-banners  |  GET   | private | /sales-banner     |                  |   Array of banners   |
-| Remove sales-banner | REMOVE | private | /sales-banner/:id |                  | message- sucess/fail |
+| Create sales-banner |  POST  |  admin  | /sales-banner     | banner JSON data | message- sucess/fail |
+|  Get sales-banners  |  GET   | public  | /sales-banner     |                  |   Array of banners   |
+| Remove sales-banner | REMOVE |  admin  | /sales-banner/:id |                  | message- sucess/fail |
 <br>
 
 ### **Order's** Related API
 |           Name            | Type  | Privacy | End point                  |      Payload       |       Response       |
 | :-----------------------: | :---: | :-----: | :------------------------- | :----------------: | :------------------: |
-|      Get all orders       |  GET  | private | /orders/                   |                    | Array of order items |
-|       Get my orders       |  GET  | private | /orders/get                |                    | Array of order items |
+|      Get all orders       |  GET  |  admin  | /orders                    |                    | Array of order items |
+|       Get my orders       |  GET  |  user   | /orders/get                |                    | Array of order items |
 |     Get order status      |  GET  | public  | /orders/:id/:mobile        |                    |  order status data   |
-|        Place order        | POST  | private | /orders/place              |  order JSON data   | message- sucess/fail |
-|    Update order status    |  PUT  | private | /orders/:id                |  order JSON data   | message- sucess/fail |
+|        Place order        | POST  |  user   | /orders                    |  order JSON data   | message- sucess/fail |
+|    Update order status    |  PUT  |  admin  | /orders/:id                |  order JSON data   | message- sucess/fail |
 | Get shipping calculations | POST  | public  | /orders/calculate-shipping | shipping JSON data |   shipping details   |
 <br>
 
 ### **Designer** Related API
 |         Name         |  Type  | Privacy | End point           |      Payload       |       Response       |
 | :------------------: | :----: | :-----: | :------------------ | :----------------: | :------------------: |
-| Update designer info |  PUT   | private | /designer           | designer JSON data | message- sucess/fail |
-|  Get designer info   |  GET   | public  | /designer/          |                    |   designer details   |
-|     Create blogs     |  POST  | private | /designer/blogs     |   blog JSON data   | message- sucess/fail |
+| Update designer info |  PUT   |  admin  | /designer           | designer JSON data | message- sucess/fail |
+|  Get designer info   |  GET   | public  | /designer           |                    |   designer details   |
+|     Create blogs     |  POST  |  admin  | /designer/blogs     |   blog JSON data   | message- sucess/fail |
 |      Get blogs       |  GET   | public  | /designer/blogs     |                    |    Array of blogs    |
-|     Remove blog      | DELETE | private | /designer/blogs/:id |                    | message- sucess/fail |
+|     Remove blog      | DELETE |  admin  | /designer/blogs/:id |                    | message- sucess/fail |
 
 <br>
 
