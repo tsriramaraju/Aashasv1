@@ -15,6 +15,7 @@
     - [**Designer** Related API](#designer-related-api)
   - [Common **error messages** and **status code**](#common-error-messages-and-status-code)
 
+>https://cdn.clipart.email/1c0dc2d792b273f08d5d43d370a8e347_batman-head-sketch-by-mike-zeck-in-malvin-vs-the-batman-_863-1224.jpeg
 
 # Project Details
 An complete ecosystem for Aashas boutique where the could manage all their digital needs in simple touch of a button.
@@ -56,25 +57,26 @@ The folowing are the rest api endpoints for the URL
 <br>
 
 ### **User's** Related API
-|      Name       |  Type  | Privacy | End point              |           Payload           |       Response        |
-| :-------------: | :----: | :-----: | :--------------------- | :-------------------------: | :-------------------: |
-|  Register user  |  POST  | public  | /users/register        |       user JSON data        | user details with jwt |
-|   Email login   |  POST  | public  | /users/login-email     |       user JSON data        | user details with jwt |
-|  Mobile login   |  POST  | public  | /users/login-mobile    |       user JSON data        | user details with jwt |
-| Forgot password |  POST  | public  | /users/forgot-password | user-email/mobile JSON data |          OTP          |
-| Password reset  |  POST  | public  | /users/reset-password  |        OTP JSON data        | message- sucess/fail  |
-|   Update user   |  POST  |  user   | /users/update          |       user JSON data        | message- sucess/fail  |
-|  Add  address   |  POST  |  user   | /users/address         |       user JSON data        | message- sucess/fail  |
-| Remove  address | DELETE |  user   | /users/address/:id     |                             | message- sucess/fail  |
-|  Remove  user   | DELETE |  user   | /users                 |                             | message- sucess/fail  |
+|      Name       |  Type  | Privacy | End point              |           Payload           |       Response       |
+| :-------------: | :----: | :-----: | :--------------------- | :-------------------------: | :------------------: |
+|  Register user  |  POST  | public  | /users/register        |       user JSON data        |      JWT Token       |
+|   Email login   |  POST  | public  | /users/login-email     |       user JSON data        |      JWT Token       |
+|  Mobile login   |  POST  | public  | /users/login-mobile    |       user JSON data        |      JWT Token       |
+|    Get user     |  GET   |  user   | /users                 |                             |     User details     |
+| Forgot password |  POST  | public  | /users/forgot-password | user-email/mobile JSON data |         OTP          |
+| Password reset  |  POST  | public  | /users/reset-password  |        OTP JSON data        | message- sucess/fail |
+|   Update user   |  POST  |  user   | /users/update          |       user JSON data        | message- sucess/fail |
+|  Add  address   |  POST  |  user   | /users/address         |       user JSON data        | message- sucess/fail |
+| Remove  address | DELETE |  user   | /users/address/:id     |                             | message- sucess/fail |
+|  Remove  user   | DELETE |  user   | /users                 |                             | message- sucess/fail |
 
 <br>
 
 ### **OTP** Related API
-|     Name     | Type  | Privacy | End point     |        Payload        |       Response        |
-| :----------: | :---: | :-----: | :------------ | :-------------------: | :-------------------: |
-| Generate OTP | POST  | public  | /otp/generate | user-mobile JSON data |          OTP          |
-| Verifty OTP  | POST  | public  | /otp/verify   |     OTP JSON data     | user details with JWT |
+|     Name     | Type  | Privacy | End point |        Payload        |       Response        |
+| :----------: | :---: | :-----: | :-------- | :-------------------: | :-------------------: |
+| Generate OTP |  GET  | public  | /otp      | user-mobile JSON data |          OTP          |
+| Verifty OTP  | POST  | public  | /otp      |     OTP JSON data     | user details with JWT |
 
 <br>
 

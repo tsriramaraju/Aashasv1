@@ -16,6 +16,7 @@ const desingerRoute = require('./Routes/api/v1/designer');
 
 //Middleware
 const errorHandler = require('./middleware/errorHandling');
+const unboundHandler = require('./middleware/404Handler');
 colors.setTheme({
   silly: 'rainbow',
   input: 'grey',
@@ -33,6 +34,9 @@ const app = express();
 
 const port = process.env.PORT;
 
+app.use(express.json());
+
+//Routes
 app.use('/api/v1/users', usersRoute);
 app.use('/api/v1/otp', otpRoute);
 app.use('/api/v1/products', productsRoute);
@@ -42,9 +46,7 @@ app.use('/api/v1/favourites', favouritesRoute);
 app.use('/api/v1/sales-banner', bannerRoute);
 app.use('/api/v1/orders', ordersRoute);
 app.use('/api/v1/designer', desingerRoute);
-app.use((req, res, next) => {
-  next(error);
-});
+app.use(unboundHandler);
 app.use(errorHandler);
 
 console.clear();

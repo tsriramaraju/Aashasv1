@@ -1,11 +1,31 @@
 const express = require('express');
 const { generateOTP, verifyOTP } = require('../../../controllers/otp');
 const Router = express.Router();
+const { check } = require('express-validator');
+const otpValidation = check('otp')
+  .isNumeric()
+  .withMessage('Please enter only number')
+  .not()
+  .isEmpty()
+  .withMessage('OTP. is required')
+  .isLength({ min: 4, max: 4 })
+  .withMessage('Please enter valid OTP')
+  .trim();
 
+const emailValidation = check('email')
+  .isEmail()
+  .withMessage('Please enter valid Email format')
+  .normalizeEmail();
+const mobileValidation = check('mobile')
+  .isNumeric()
+  .withMessage('Please enter only number')
+
+  .isLength({ min: 10, max: 10 })
+  .withMessage('Please enter valid mobile number')
+  .trim();
 //Generate OTP
-Router.route('/generate').post(generateOTP);
+Router.route('/generate').post(mobileValidation, generateOTP);
 
-//Verify OTP
-Router.route('/verify').post(verifyOTP);
-
+// verify OTP
+Router.route('/').post(otpValidation, verifyOTP);
 module.exports = Router;
