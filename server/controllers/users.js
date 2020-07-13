@@ -3,9 +3,9 @@ const OTP = require('../models/OTP');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-// const accountSid = process.env.TWILIO_SID;
-// const authToken = process.env.TWILIO_TOKEN;
-// const client = require('twilio')(accountSid, authToken);
+const accountSid = process.env.TWILIO_SID;
+const authToken = process.env.TWILIO_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 
 // @desc      Register  user
 // @route     POST /api/v1/users/register
@@ -14,12 +14,13 @@ exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req).errors;
   if (errors.length > 0) return res.status(400).json(errors);
   const { name, email, password, mobile, otp } = req.body;
+  if (req.body.isAdmin) return res.status(400).json({ msg: 'gotcha idiot' });
   try {
     const salt = 10;
     const hash = await bcrypt.hash(password, salt);
     const user = new User({ name, email, password: hash, mobile });
     //verify OTP
-    const getOtp = await OTP.findOne({ otp: req.body.otp });
+    const getOtp = await OTP.findOne({ otp: otp });
     if (!getOtp) return res.status(400).json([{ msg: 'Invalid OTP' }]);
     1;
     const diff = parseInt((Date.now() - getOtp.date) / 1000);
@@ -113,11 +114,11 @@ exports.forgotPassword = async (req, res, next) => {
       date: Date.now(),
     });
     await otp.save();
-    // const result = await client.messages.create({
-    //   body: `Please check the OTP ${otp.otp}`,
-    //   from: '9121003535',
-    //   to: `+91${otp.mobile}`,
-    // });
+    await client.messages.create({
+      body: `Your authentication OTP ${otp.otp}`,
+      to: '+91 91210 03535',
+      from: '+13343842141',
+    });
     res.json({ msg: 'generated OTP', otp: otp.otp });
   } catch (err) {
     next(err);

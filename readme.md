@@ -21,7 +21,7 @@
 An complete ecosystem for Aashas boutique where the could manage all their digital needs in simple touch of a button.
 
 >**Tech Stack :**<br>
->Hosting: **HEROKU**
+>Hosting: **[HEROKU]()** <br>
 >Backend: **[Node.JS](), [Express.JS]()**<br>
 >Frontend-Web: **[React]()**<br>
 >Frontend-Mobile: **[Flutter]()**<br>
@@ -50,12 +50,16 @@ Established in 2011, it continues to draw its design and curating inspirations f
 # Server Documentation
 
 
+
 ## API Routes Ref:
 
 The folowing are the rest api endpoints for the URL
->localhost:8000/api/v1
+>[aashas.herokuapp.com/api/v1/](https://aashas.herokuapp.com/)
 
 <br>
+
+Postman Api Documentation link 
+>[Postman Documentation](https://documenter.getpostman.com/view/12012771/T17NaQWj?version=latest)
 
 ### **User's** Related API
 |      Name       |  Type  | Privacy | End point              |           Payload           |       Response       |

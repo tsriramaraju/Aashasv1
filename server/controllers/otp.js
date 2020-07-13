@@ -1,4 +1,9 @@
 const OTP = require('../models/OTP');
+var accountSid = process.env.TWILIO_SID; // Your Account SID from www.twilio.com/console
+var authToken = process.env.TWILIO_TOKEN;
+
+const client = require('twilio')(accountSid, authToken);
+
 const { validationResult } = require('express-validator');
 // @desc      Generate otp
 // @route     GET /api/v1/otp/generate
@@ -13,6 +18,11 @@ exports.generateOTP = async (req, res, next) => {
       date: Date.now(),
     });
     await otp.save();
+    await client.messages.create({
+      body: `Your authentication OTP ${otp.otp}`,
+      to: '+91 91210 03535',
+      from: '+13343842141',
+    });
     res.json({ msg: 'generated OTP', otp: otp.otp });
   } catch (err) {
     next(err);

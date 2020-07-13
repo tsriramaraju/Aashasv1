@@ -7,7 +7,6 @@ const xss = require('xss-clean');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const cors = require('cors');
-const morgan = require('morgan');
 
 const connectDB = require('./config/mongoDB');
 
@@ -41,10 +40,6 @@ colors.setTheme({
 const app = express();
 
 const port = process.env.PORT;
-//midllewares
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(morgan('dev'));
-// }
 
 // Sanitize data
 app.use(mongoSanitize());
@@ -81,16 +76,11 @@ app.use('/api/v1/sales-banner', bannerRoute);
 app.use('/api/v1/orders', ordersRoute);
 app.use('/api/v1/designer', desingerRoute);
 
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static(path.join(__dirname, 'public')));
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-  // // Express serve up index.html file if it doesn't recognize route
-  // app.get('*', (req, res) => {
-  //   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  // });
-  app.use(unboundHandler);
-}
+app.use(unboundHandler);
+
 app.use(errorHandler);
 
 console.clear();
