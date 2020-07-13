@@ -21,6 +21,7 @@
 An complete ecosystem for Aashas boutique where the could manage all their digital needs in simple touch of a button.
 
 >**Tech Stack :**<br>
+>Hosting: **HEROKU**
 >Backend: **[Node.JS](), [Express.JS]()**<br>
 >Frontend-Web: **[React]()**<br>
 >Frontend-Mobile: **[Flutter]()**<br>
