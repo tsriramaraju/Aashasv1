@@ -2,6 +2,7 @@
 ## Table of Contents
 - [Project Details](#project-details)
 - [Aashas Boutique](#aashas-boutique)
+- [Android APP Documentation](#android-app-documentation)
 - [Server Documentation](#server-documentation)
   - [API Routes Ref:](#api-routes-ref)
     - [**User's** Related API](#users-related-api)
@@ -43,6 +44,9 @@ Established in 2011, it continues to draw its design and curating inspirations f
 ---
 
 <br>
+<br>
+# Android APP Documentation
+The mobile is built with flutter
 <br>
 
 
