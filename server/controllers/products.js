@@ -1,5 +1,8 @@
 const Product = require('../models/Product');
 const { validationResult } = require('express-validator');
+const Favourites = require('../models/Favourites');
+const Cart = require('../models/Cart');
+const User = require('../models/User');
 
 // @desc      create product
 // @route     POST /api/v1/products
@@ -127,7 +130,11 @@ exports.deleteProduct = async (req, res, next) => {
     const id = req.params.id;
     await Product.findByIdAndDelete(id);
     //delte products from cart
+    await Cart.deleteMany({ prodId: id });
+
     //delte products from favourites
+    await Favourites.deleteMany({ prodId: id });
+
     res.json([
       {
         success: 'success',

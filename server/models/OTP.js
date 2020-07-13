@@ -6,9 +6,7 @@ const OTPSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    unique: true,
     default: Date.now(),
-    expires: 3500,
   },
   mobile: { type: Number },
 });

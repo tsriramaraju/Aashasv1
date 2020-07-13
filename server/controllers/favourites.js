@@ -12,12 +12,12 @@ exports.toggleFav = async (req, res, next) => {
       prodId: id,
     });
     //check for existing fav arr
-    // console.log(user);
-    const userFavArr = user.favourite.filter(
-      (fav) => fav.prodId.toString() === id.toString()
-    );
-    console.log(userFavArr);
-    if (userFavArr.length > 0) {
+    let isFavId = false;
+    user.favourite.forEach((fav) => {
+      if (fav.prodId.toString() === id.toString()) isFavId = fav._id;
+    });
+
+    if (isFavId) {
       const userUpdFavArr = user.favourite.filter(
         (fav) => fav.prodId.toString() !== id.toString()
       );
@@ -27,7 +27,7 @@ exports.toggleFav = async (req, res, next) => {
         { new: true, runValidators: true }
       );
 
-      await Favourite.findByIdAndDelete(favourite.id);
+      await Favourite.deleteOne({ _id: isFavId });
       return res.json([{ status: 'success', msg: 'Favourite  removed' }]);
     }
 
@@ -70,7 +70,7 @@ exports.getFav = async (req, res, next) => {
         },
       });
 
-    res.json(result);
+    res.json(result.favourite);
   } catch (error) {
     next(error);
   }

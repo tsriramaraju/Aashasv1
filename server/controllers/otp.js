@@ -10,6 +10,7 @@ exports.generateOTP = async (req, res, next) => {
     const otp = new OTP({
       otp: Math.floor(1000 + Math.random() * 8000),
       mobile: req.body.mobile,
+      date: Date.now(),
     });
     await otp.save();
     res.json({ msg: 'generated OTP', otp: otp.otp });

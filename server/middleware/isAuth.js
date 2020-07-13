@@ -24,6 +24,10 @@ exports.isAuth = async (req, res, next) => {
     const user = await await User.findById(decoded.payload.id)
       .select('-password')
       .populate('cart favourite');
+    if (user.isAdmin)
+      return next(
+        new ErrorResponse('Not authorized to access this route', 401)
+      );
     req.user = user;
     next();
   } catch (err) {

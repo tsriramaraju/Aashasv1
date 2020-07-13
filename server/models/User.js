@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   mobile: { type: Number, required: true, unique: true },
   image: { type: String },
+  isAdmin: { type: Boolean, default: false },
   loginType: { type: String, enum: ['email', 'facebook'], default: 'email' },
   address: [
     {
@@ -18,11 +19,11 @@ const UserSchema = new mongoose.Schema({
       state: { type: String },
     },
   ],
-  orders: [{ id: { type: mongoose.Schema.Types.ObjectId, ref: 'order' } }],
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'order' }],
   cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'cart' }],
   favourite: [{ type: mongoose.Schema.Types.ObjectId, ref: 'favourite' }],
   customProducts: [
-    { id: { type: mongoose.Schema.Types.ObjectId, ref: 'customProduct' } },
+    { type: mongoose.Schema.Types.ObjectId, ref: 'customProduct' },
   ],
   date: {
     type: Date,

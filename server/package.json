@@ -19,6 +19,7 @@
     "express-validator": "^6.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.22",
+    "request": "^2.88.2",
     "twilio": "^3.48.0"
   }
 }

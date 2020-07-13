@@ -57,7 +57,7 @@ exports.getCart = async (req, res, next) => {
         },
       });
 
-    res.json(result);
+    res.json(result.cart);
   } catch (error) {
     next(error);
   }

@@ -110,6 +110,7 @@ exports.forgotPassword = async (req, res, next) => {
     const otp = new OTP({
       otp: Math.floor(1000 + Math.random() * 8000),
       mobile: +req.body.mobile,
+      date: Date.now(),
     });
     await otp.save();
     // const result = await client.messages.create({
@@ -152,7 +153,7 @@ exports.resetPassword = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   const errors = validationResult(req).errors;
   if (errors.length > 0) return res.status(400).json(errors);
-
+  if (req.body.isAdmin) return res.status(400).json({ msg: 'gotcha idiot' });
   try {
     const user = req.user;
     await User.findByIdAndUpdate(user.id, req.body, {

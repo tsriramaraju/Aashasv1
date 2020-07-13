@@ -22,6 +22,10 @@ exports.isAdmin = async (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.payload.id).select('-password');
+    if (!user.isAdmin)
+      return next(
+        new ErrorResponse('Not authorized to access this route', 401)
+      );
     req.user = user;
     next();
   } catch (err) {

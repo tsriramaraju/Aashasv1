@@ -8,6 +8,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
+      autoIndex: true,
     });
     console.log(`Database connected...`.info);
   } catch (err) {
