@@ -15,7 +15,7 @@
     - [**Designer** Related API](#designer-related-api)
   - [Common **error messages** and **status code**](#common-error-messages-and-status-code)
 
->https://cdn.clipart.email/1c0dc2d792b273f08d5d43d370a8e347_batman-head-sketch-by-mike-zeck-in-malvin-vs-the-batman-_863-1224.jpeg
+<!-- >https://cdn.clipart.email/1c0dc2d792b273f08d5d43d370a8e347_batman-head-sketch-by-mike-zeck-in-malvin-vs-the-batman-_863-1224.jpeg -->
 
 # Project Details
 An complete ecosystem for Aashas boutique where the could manage all their digital needs in simple touch of a button.
