@@ -1,5 +1,13 @@
 const express = require('express');
+const path = require('path');
 const colors = require('colors');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
+const cors = require('cors');
+const morgan = require('morgan');
 
 const connectDB = require('./config/mongoDB');
 
@@ -33,6 +41,35 @@ colors.setTheme({
 const app = express();
 
 const port = process.env.PORT;
+//midllewares
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('dev'));
+}
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent XSS attacks
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 mins
+  max: 100,
+});
+app.use(limiter);
+
+// Prevent http param pollution
+app.use(hpp());
+
+// Enable CORS
+app.use(cors());
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 
