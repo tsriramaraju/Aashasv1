@@ -74,9 +74,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 //Routes
-app.use('/api/v1/users', usersRoute);
-app.use('/api/v1/otp', otpRoute);
-app.use('/api/v1/products', productsRoute);
+app.use('./api/v1/users', usersRoute);
+app.use('./api/v1/otp', otpRoute);
+app.use('./api/v1/products', productsRoute);
 app.use('/api/v1/custom-products', customProductsRoute);
 app.use('/api/v1/cart', cartRoute);
 app.use('/api/v1/favourites', favouritesRoute);
