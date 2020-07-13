@@ -68,22 +68,29 @@ app.use(hpp());
 // Enable CORS
 app.use(cors());
 
-// Set static folder
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(express.json());
 
 //Routes
-app.use('./api/v1/users', usersRoute);
-app.use('./api/v1/otp', otpRoute);
-app.use('./api/v1/products', productsRoute);
+app.use('/api/v1/users', usersRoute);
+app.use('/api/v1/otp', otpRoute);
+app.use('/api/v1/products', productsRoute);
 app.use('/api/v1/custom-products', customProductsRoute);
 app.use('/api/v1/cart', cartRoute);
 app.use('/api/v1/favourites', favouritesRoute);
 app.use('/api/v1/sales-banner', bannerRoute);
 app.use('/api/v1/orders', ordersRoute);
 app.use('/api/v1/designer', desingerRoute);
-app.use(unboundHandler);
+
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, 'public')));
+
+  // // Express serve up index.html file if it doesn't recognize route
+  // app.get('*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  // });
+  app.use(unboundHandler);
+}
 app.use(errorHandler);
 
 console.clear();
