@@ -42,9 +42,9 @@ const app = express();
 
 const port = process.env.PORT;
 //midllewares
-if (process.env.NODE_ENV === 'production') {
-  app.use(morgan('dev'));
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(morgan('dev'));
+// }
 
 // Sanitize data
 app.use(mongoSanitize());
