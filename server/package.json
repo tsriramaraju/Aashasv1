@@ -2,9 +2,9 @@
   "name": "aashas-rest-server",
   "version": "1.0.0",
   "description": "Aashas Boutique's Backend server with all the api integration.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "author": "sriram",
   "license": "MIT",
