@@ -19,10 +19,11 @@ class MobileRegistrationScreen extends StatefulWidget {
 }
 
 class _MobileRegistrationScreenState extends State<MobileRegistrationScreen> {
-  void _handleSubmit(BuildContext context) {
+  void _handleSubmit(BuildContext context) async {
     final user = Provider.of<Users>(context);
-    user.setUserMobile(int.parse(_mobileController.text));
-//    Navigator.pushNamed(context, OTPScreen.routeName);
+    await user.setUserMobile(int.parse(_mobileController.text));
+
+    Navigator.pushNamed(context, OTPScreen.routeName);
   }
 
   TextEditingController _mobileController;

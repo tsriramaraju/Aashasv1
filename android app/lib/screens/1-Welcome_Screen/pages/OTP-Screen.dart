@@ -2,9 +2,11 @@ import 'package:aashas/components/Button.dart';
 import 'package:aashas/drawerHome.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/text.dart';
+import 'package:aashas/providers/Users.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 class OTPScreen extends StatefulWidget {
   static const routeName = '/OTP-Screen';
@@ -13,9 +15,25 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  void _handleSubmit(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(
-        context, DrawerHome.routeName, (route) => false);
+  void _handleSubmit(BuildContext context) async {
+    final user = Provider.of<Users>(context);
+    final result = await user.verifyOTP(int.parse(_otpController.text));
+    if (result)
+      Navigator.pushNamedAndRemoveUntil(
+          context, DrawerHome.routeName, (route) => false);
+  }
+
+  TextEditingController _otpController;
+  @override
+  void initState() {
+    super.initState();
+    _otpController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _otpController.dispose();
   }
 
   @override
@@ -62,6 +80,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 height: height * 0.05,
               ),
               PinCodeTextField(
+                controller: _otpController,
                 pinTheme: PinTheme(
                   inactiveColor: Color(KOTPInactiveColor),
                   activeColor: Color(KOTPNumberColor).withOpacity(0.3),
