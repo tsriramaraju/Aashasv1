@@ -48,3 +48,7 @@ exports.verifyOTP = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.test = (req, res) => {
+  res.json({ body: req.body, header: req.headers });
+};

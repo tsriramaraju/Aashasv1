@@ -31,7 +31,16 @@ class Users with ChangeNotifier {
     print('$_password + $_email + $_name +$_mobile');
     final body = jsonEncode({"mobile": _mobile.toInt()});
     print(jsonDecode(body));
-    final result = await http.post('$URI/otp/generate', body: body);
+    final result = await http.post(
+      '$URI/otp/generate',
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'creatorId': userId,
+      }),
+    );
     print(jsonDecode(result.body));
   }
 }

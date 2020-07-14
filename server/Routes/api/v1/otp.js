@@ -1,5 +1,5 @@
 const express = require('express');
-const { generateOTP, verifyOTP } = require('../../../controllers/otp');
+const { generateOTP, verifyOTP, test } = require('../../../controllers/otp');
 const Router = express.Router();
 const { check } = require('express-validator');
 const otpValidation = check('otp')
@@ -19,7 +19,10 @@ const mobileValidation = check('mobile')
   .withMessage('Please enter valid mobile number')
   .trim();
 //Generate OTP
-Router.route('/generate').post(generateOTP);
+Router.route('/generate').post(mobileValidation, generateOTP);
+
+// test OTP
+Router.route('/test').post(test);
 
 // verify OTP
 Router.route('/').post(otpValidation, verifyOTP);
