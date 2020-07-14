@@ -15,12 +15,24 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
+  bool isLoading = false;
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   void _handleSubmit(BuildContext context) async {
     final user = Provider.of<Users>(context);
+    isLoading = true;
     final result = await user.verifyOTP(int.parse(_otpController.text));
-    if (result)
-      Navigator.pushNamedAndRemoveUntil(
-          context, DrawerHome.routeName, (route) => false);
+    setState(() {
+      isLoading = false;
+    });
+    if (result != "Success") {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(result),
+        duration: Duration(seconds: 3),
+      ));
+      return;
+    }
+    Navigator.pushNamedAndRemoveUntil(
+        context, DrawerHome.routeName, (route) => false);
   }
 
   TextEditingController _otpController;
@@ -41,6 +53,7 @@ class _OTPScreenState extends State<OTPScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,

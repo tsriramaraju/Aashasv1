@@ -21,10 +21,10 @@ exports.registerUser = async (req, res, next) => {
     const user = new User({ name, email, password: hash, mobile });
     //verify OTP
     const getOtp = await OTP.findOne({ otp: otp });
-    if (!getOtp) return res.status(400).json([{ msg: 'Invalid OTP' }]);
+    if (!getOtp) return res.status(400).json({ msg: 'Invalid OTP' });
     1;
     const diff = parseInt((Date.now() - getOtp.date) / 1000);
-    if (diff > 180) return res.status(400).json([{ msg: 'OTP Expired', diff }]);
+    if (diff > 180) return res.status(400).json({ msg: 'OTP Expired', diff });
     //save User
     await user.save();
     const secret = process.env.JWT_SECRET;
@@ -235,7 +235,7 @@ exports.checkEmail = async (req, res, next) => {
   const email = req.body.email;
   try {
     const result = await User.exists({ email });
-    result ? res.json({ msg: 'sucess' }) : res.json({ msg: 'failed' });
+    result ? res.json({ msg: 'success' }) : res.json({ msg: 'failed' });
   } catch (error) {
     next(error);
   }
@@ -248,7 +248,7 @@ exports.checkMobile = async (req, res, next) => {
   const mobile = req.body.mobile;
   try {
     const result = await User.exists({ mobile });
-    result ? res.json({ msg: 'sucess' }) : res.json({ msg: 'failed' });
+    result ? res.json({ msg: 'success' }) : res.json({ msg: 'failed' });
   } catch (error) {
     next(error);
   }

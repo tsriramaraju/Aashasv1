@@ -19,26 +19,52 @@ class Users with ChangeNotifier {
   List<Object> _customProducts;
   DateTime _date;
 
-  void setUserDetails(String name, String email, String password) {
-    _name = name;
-    _email = email;
-    _password = password;
-    print('$_password + $_email + $_name'
-        '');
+  Future<bool> setUserDetails(
+      String name, String email, String password) async {
+    try {
+      final body = jsonEncode({
+        "email": email,
+      });
+      final headers = {"content-type": "application/json"};
+      final result = await http.post('$URI/users/check-email',
+          body: body, headers: headers);
+      final resData = jsonDecode(result.body);
+//      print(resData);
+      if (resData['msg'] == "sucess") return false;
+      _name = name;
+      _email = email;
+      _password = password;
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 
-  Future<void> setUserMobile(int mobile) async {
-    _mobile = mobile;
-    print('$_password + $_email + $_name +$_mobile');
-    final body = jsonEncode({"mobile": _mobile.toInt()});
-    final headers = {"content-type": "application/json"};
-    print(jsonDecode(body));
-    final result =
-        await http.post('$URI/otp/generate', body: body, headers: headers);
-    print(jsonDecode(result.body));
+  Future<bool> setUserMobile(int mobile) async {
+    try {
+      final body = jsonEncode({
+        "mobile": mobile,
+      });
+      final headers = {"content-type": "application/json"};
+      final result = await http.post('$URI/users/check-mobile',
+          body: body, headers: headers);
+      final resData = jsonDecode(result.body);
+
+      if (resData['msg'] == "sucess") return false;
+      _mobile = mobile;
+      final mobBody = jsonEncode({"mobile": _mobile.toInt()});
+      final mobHeaders = {"content-type": "application/json"};
+      print(jsonDecode(body));
+      final mobResult = await http.post('$URI/otp/generate',
+          body: mobBody, headers: mobHeaders);
+      print(jsonDecode(mobResult.body));
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 
-  Future<bool> verifyOTP(int otp) async {
+  Future<String> verifyOTP(int otp) async {
     try {
       final body = jsonEncode({
         "mobile": _mobile,
@@ -48,14 +74,18 @@ class Users with ChangeNotifier {
         "password": _password
       });
       final headers = {"content-type": "application/json"};
-      print(jsonDecode(body));
       final result =
           await http.post('$URI/users/register', body: body, headers: headers);
       final resData = jsonDecode(result.body);
       print(resData);
-      if (resData['msg'] == "User successfuly registered") return true;
-      return false;
-    } catch (err) {}
-    return false;
+
+      if (resData['msg'] == "User successfuly registered") return "Success";
+      if (resData['msg'] == "OTP Expired") return "OTP Expired";
+      print(resData);
+      return "Invalid OTP";
+    } catch (err) {
+      print(err);
+      return "Some error on server, plz try later";
+    }
   }
 }

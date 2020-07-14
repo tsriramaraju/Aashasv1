@@ -27,12 +27,22 @@ class _MobileRegistrationScreenState extends State<MobileRegistrationScreen> {
     if (mobVal) _handleSubmit(context);
   }
 
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isLoading = false;
   void _handleSubmit(BuildContext context) async {
     final user = Provider.of<Users>(context);
     isLoading = true;
-    await user.setUserMobile(int.parse(_mobileController.text));
-    isLoading = false;
+    final result = await user.setUserMobile(int.parse(_mobileController.text));
+    setState(() {
+      isLoading = false;
+    });
+    if (!result) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Mobile No. Exists'),
+        duration: Duration(seconds: 3),
+      ));
+      return;
+    }
     Navigator.pushNamed(context, OTPScreen.routeName);
   }
 
@@ -54,6 +64,7 @@ class _MobileRegistrationScreenState extends State<MobileRegistrationScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Color(KMRSBGColor),
       appBar: AppBar(
         elevation: 0,

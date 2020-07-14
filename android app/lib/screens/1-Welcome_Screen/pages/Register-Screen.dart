@@ -39,6 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordFocusNode = FocusNode();
   }
 
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void dispose() {
     super.dispose();
@@ -53,6 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool nameVal = true;
   bool emailVal = true;
   bool passwordVal = true;
+  bool isLoading = false;
   void validate(BuildContext context) {
     setState(() {
       _nameController.text.length >= 4 ? nameVal = true : nameVal = false;
@@ -60,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               .hasMatch(_emailController.text)
           ? emailVal = true
           : emailVal = false;
-      _passwordController.text.length > 7
+      _passwordController.text.length > 5
           ? passwordVal = true
           : passwordVal = false;
     });
@@ -68,10 +70,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (nameVal && emailVal && passwordVal) _handleSignUp(context);
   }
 
-  void _handleSignUp(BuildContext context) {
+  void _handleSignUp(BuildContext context) async {
     final user = Provider.of<Users>(context);
-    user.setUserDetails(
+    isLoading = true;
+    final result = await user.setUserDetails(
         _nameController.text, _emailController.text, _passwordController.text);
+    setState(() {
+      isLoading = false;
+    });
+    if (!result) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Email Id Exists'),
+        duration: Duration(seconds: 3),
+      ));
+      return;
+    }
     Navigator.pushNamed(context, MobileRegistrationScreen.routeName);
   }
 
@@ -82,6 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final bool tab = width > 700;
 
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Color(KRSBGColor),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(tab ? 50 : 25),
@@ -241,7 +255,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontSize: tab ? 32 : null,
                     bgColor: KRSButtonBGColor,
                     width: width * .75,
-                    onTap: () => validate(context),
+                    loading: isLoading,
+                    onTap: () {
+                      return validate(context);
+                    },
                   ),
                 ),
                 SizedBox(
