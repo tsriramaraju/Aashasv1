@@ -19,10 +19,20 @@ class MobileRegistrationScreen extends StatefulWidget {
 }
 
 class _MobileRegistrationScreenState extends State<MobileRegistrationScreen> {
+  bool mobVal = true;
+  void validate(BuildContext context) {
+    setState(() {
+      mobVal = _mobileController.text.length == 10;
+    });
+    if (mobVal) _handleSubmit(context);
+  }
+
+  bool isLoading = false;
   void _handleSubmit(BuildContext context) async {
     final user = Provider.of<Users>(context);
+    isLoading = true;
     await user.setUserMobile(int.parse(_mobileController.text));
-
+    isLoading = false;
     Navigator.pushNamed(context, OTPScreen.routeName);
   }
 
@@ -87,6 +97,11 @@ class _MobileRegistrationScreenState extends State<MobileRegistrationScreen> {
                 decoration: InputDecoration(
                   hintText: 'phone',
                   contentPadding: EdgeInsets.all(15),
+                  errorText: mobVal ? null : "Enter valid mobile no.",
+                  errorStyle: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.red,
+                  ),
                   prefixIcon: Icon(
                     FontAwesomeIcons.mobileAlt,
                     color: Colors.black,
@@ -103,11 +118,12 @@ class _MobileRegistrationScreenState extends State<MobileRegistrationScreen> {
               ),
               Center(
                   child: buildButton(
+                      loading: isLoading,
                       bgColor: KMRSButtonBGColor,
                       text: 'Send OTP',
                       textColor: KMRSButtonTextColor,
                       width: width * 0.65,
-                      onTap: () => _handleSubmit(context))),
+                      onTap: () => validate(context))),
             ],
           ),
         ),

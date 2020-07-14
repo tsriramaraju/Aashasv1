@@ -12,6 +12,8 @@ const {
   removeAddress,
   removeUser,
   getUser,
+  checkEmail,
+  checkMobile,
 } = require('../../../controllers/users');
 const { isAuth } = require('../../../middleware/isAuth');
 
@@ -84,6 +86,12 @@ Router.route('/login-email').post(
   [emailValidation, passwordValidation],
   loginEmail
 );
+
+//check email
+Router.route('/check-email').post([emailValidation], checkEmail);
+
+//check mobile
+Router.route('/check-mobile').post([mobileValidation], checkMobile);
 
 //Login User with mobile
 Router.route('/login-mobile').post(

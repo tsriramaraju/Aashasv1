@@ -227,3 +227,29 @@ exports.removeUser = async (req, res, next) => {
     next(err);
   }
 };
+
+// @desc      check Email
+// @route     POST /api/v1/users/check-email
+// @access    public
+exports.checkEmail = async (req, res, next) => {
+  const email = req.body.email;
+  try {
+    const result = await User.exists({ email });
+    result ? res.json({ msg: 'sucess' }) : res.json({ msg: 'failed' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc      check Mobile
+// @route     POST /api/v1/users/check-mobile
+// @access    public
+exports.checkMobile = async (req, res, next) => {
+  const mobile = req.body.mobile;
+  try {
+    const result = await User.exists({ mobile });
+    result ? res.json({ msg: 'sucess' }) : res.json({ msg: 'failed' });
+  } catch (error) {
+    next(error);
+  }
+};

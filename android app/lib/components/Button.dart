@@ -10,6 +10,7 @@ GestureDetector buildButton(
     double radius,
     bool elevation,
     int textColor,
+    bool loading = false,
     int bgColor,
     IconData icon,
     int iconColor}) {
@@ -32,19 +33,25 @@ GestureDetector buildButton(
             : null,
       ),
       alignment: Alignment.center,
-      child: text != null
-          ? Text(
-              text,
-              style: GoogleFonts.roboto(
-                color: Color(textColor),
-                fontSize: fontSize == null ? 18 : fontSize,
-              ),
-              textAlign: TextAlign.center,
+      child: loading
+          ? CircularProgressIndicator(
+              strokeWidth: 1.5,
+              backgroundColor: Colors.white,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
             )
-          : Icon(
-              icon,
-              color: Color(iconColor),
-            ),
+          : text != null
+              ? Text(
+                  text,
+                  style: GoogleFonts.roboto(
+                    color: Color(textColor),
+                    fontSize: fontSize == null ? 18 : fontSize,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+              : Icon(
+                  icon,
+                  color: Color(iconColor),
+                ),
     ),
   );
 }

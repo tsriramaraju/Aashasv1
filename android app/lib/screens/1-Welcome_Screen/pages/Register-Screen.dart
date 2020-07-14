@@ -50,7 +50,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordFocusNode.dispose();
   }
 
-  void _handleSignUp(BuildContext context, String type) {
+  bool nameVal = true;
+  bool emailVal = true;
+  bool passwordVal = true;
+  void validate(BuildContext context) {
+    setState(() {
+      _nameController.text.length >= 4 ? nameVal = true : nameVal = false;
+      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              .hasMatch(_emailController.text)
+          ? emailVal = true
+          : emailVal = false;
+      _passwordController.text.length > 7
+          ? passwordVal = true
+          : passwordVal = false;
+    });
+
+    if (nameVal && emailVal && passwordVal) _handleSignUp(context);
+  }
+
+  void _handleSignUp(BuildContext context) {
     final user = Provider.of<Users>(context);
     user.setUserDetails(
         _nameController.text, _emailController.text, _passwordController.text);
@@ -100,6 +118,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           hintText: "Your Name",
+                          errorText: nameVal
+                              ? null
+                              : "Name should be at least 4 characters long",
+                          errorStyle: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red,
+                              fontSize: tab ? 26 : null),
                           contentPadding: EdgeInsets.all(25),
                           hintStyle: GoogleFonts.roboto(
                               fontWeight: FontWeight.w500,
@@ -121,6 +146,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Color(KRSBGColor),
                             ),
                           ),
+                          errorText:
+                              emailVal ? null : "Please enter valid email",
+                          errorStyle: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red,
+                              fontSize: tab ? 26 : null),
                           hintText: "Email",
                           contentPadding: EdgeInsets.all(25),
                           hintStyle: GoogleFonts.roboto(
@@ -145,6 +176,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderSide: BorderSide.none,
                           ),
                           hintText: "Password",
+                          errorText: passwordVal
+                              ? null
+                              : "password should be minimum 6 characters long",
+                          errorStyle: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red,
+                              fontSize: tab ? 26 : null),
                           contentPadding: EdgeInsets.all(25),
                           hintStyle: GoogleFonts.roboto(
                               fontWeight: FontWeight.w500,
@@ -203,7 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontSize: tab ? 32 : null,
                     bgColor: KRSButtonBGColor,
                     width: width * .75,
-                    onTap: () => _handleSignUp(context, 'email'),
+                    onTap: () => validate(context),
                   ),
                 ),
                 SizedBox(
