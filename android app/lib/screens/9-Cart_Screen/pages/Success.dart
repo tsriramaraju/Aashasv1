@@ -1,12 +1,11 @@
 import 'package:aashas/components/Button.dart';
+import 'package:aashas/drawerHome.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../drawerHome.dart';
 
 class SuccessPage extends StatelessWidget {
   static const routeName = '/success-page';

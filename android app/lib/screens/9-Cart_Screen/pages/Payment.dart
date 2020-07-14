@@ -70,8 +70,10 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(
-        msg: "EXTERNAL_WALLET: " + response.walletName, timeInSecForIos: 4);
+    // ignore: deprecated_member_use
+    // Fluttertoast.showToast(
+
+    //     ,gravity: ToastGravity.BOTTOM, toastDuration: 4);
   }
 
   @override

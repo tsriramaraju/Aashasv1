@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'helpers/constants/colors.dart';
+import './helpers/constants/colors.dart';
 
 enum TabItem { category, shop, custom, designer }
 
