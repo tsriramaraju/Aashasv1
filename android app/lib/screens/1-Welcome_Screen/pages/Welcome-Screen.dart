@@ -71,7 +71,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
 class BottomPart extends StatelessWidget {
   void _handleNavigation(String name) {
-    Navigator.pushReplacementNamed(context, name);
+    Navigator.pushNamed(context, name);
   }
 
   final width;

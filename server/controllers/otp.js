@@ -23,7 +23,7 @@ exports.generateOTP = async (req, res, next) => {
       to: '+91 91210 03535',
       from: '+13343842141',
     });
-    res.json({ msg: 'generated OTP', otp: otp.otp });
+    res.json({ msg: 'generated OTP', otp: otp.otp, req: req.body });
   } catch (err) {
     next(err);
   }

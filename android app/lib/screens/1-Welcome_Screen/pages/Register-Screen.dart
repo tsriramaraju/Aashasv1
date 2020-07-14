@@ -2,12 +2,16 @@ import 'package:aashas/components/Button.dart';
 import 'package:aashas/drawerHome.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/styles.dart';
+import 'package:aashas/providers/Users.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/name-registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import 'mobile-Registration.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/register';
@@ -47,10 +51,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _handleSignUp(BuildContext context, String type) {
-    if (type != 'mobile')
-      Navigator.pushReplacementNamed(context, DrawerHome.routeName);
-    else
-      Navigator.pushNamed(context, NameRegistrationScreen.routeName);
+    final user = Provider.of<Users>(context);
+    user.setUserDetails(
+        _nameController.text, _emailController.text, _passwordController.text);
+    Navigator.pushNamed(context, MobileRegistrationScreen.routeName);
   }
 
   @override
@@ -220,20 +224,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    //Facebook button
                     buildButton(
                         icon: FontAwesomeIcons.facebookF,
                         width: width * .40,
                         height: tab ? 60 : null,
                         iconColor: KRSButtonIconColor,
                         bgColor: KRSFBColor,
-                        onTap: () => _handleSignUp(context, 'facebook')),
+                        onTap: null),
                     buildButton(
                         icon: FontAwesomeIcons.twitter,
                         width: width * .40,
                         height: tab ? 60 : null,
                         iconColor: KRSButtonIconColor,
                         bgColor: KRSTwitterColor,
-                        onTap: () => _handleSignUp(context, 'twitter')),
+                        onTap: null),
                   ],
                 ),
                 SizedBox(
@@ -248,14 +253,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: tab ? 60 : null,
                         iconColor: KRSButtonIconColor,
                         bgColor: KRSGoogleColor,
-                        onTap: () => _handleSignUp(context, 'google')),
+                        onTap: null),
                     buildButton(
                         icon: FontAwesomeIcons.phone,
                         width: width * .40,
                         height: tab ? 60 : null,
                         iconColor: KRSButtonIconColor,
                         bgColor: KRSMobileColor,
-                        onTap: () => _handleSignUp(context, 'mobile')),
+                        onTap: null),
                   ],
                 )
               ],

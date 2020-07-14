@@ -1,5 +1,6 @@
 import 'package:aashas/drawerHome.dart';
 import 'package:aashas/providers/CartData.dart';
+import 'package:aashas/providers/Users.dart';
 import 'package:aashas/screens/1-Welcome_Screen/Initial-Screen.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/OTP-Screen.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/Register-Screen.dart';
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MultiProvider(
-      providers: [ChangeNotifierProvider.value(value: CartData())],
+      providers: [
+        ChangeNotifierProvider.value(value: CartData()),
+        ChangeNotifierProvider.value(value: Users()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: Home.routeName,

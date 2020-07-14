@@ -1,18 +1,41 @@
 import 'package:aashas/components/Button.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/text.dart';
+import 'package:aashas/providers/Users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'OTP-Screen.dart';
 
-class MobileRegistrationScreen extends StatelessWidget {
+class MobileRegistrationScreen extends StatefulWidget {
   static const routeName = '/mobile-registration';
 
+  @override
+  _MobileRegistrationScreenState createState() =>
+      _MobileRegistrationScreenState();
+}
+
+class _MobileRegistrationScreenState extends State<MobileRegistrationScreen> {
   void _handleSubmit(BuildContext context) {
-    Navigator.pushNamed(context, OTPScreen.routeName);
+    final user = Provider.of<Users>(context);
+    user.setUserMobile(int.parse(_mobileController.text));
+//    Navigator.pushNamed(context, OTPScreen.routeName);
+  }
+
+  TextEditingController _mobileController;
+  @override
+  void initState() {
+    super.initState();
+    _mobileController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _mobileController.dispose();
   }
 
   @override
@@ -59,6 +82,7 @@ class MobileRegistrationScreen extends StatelessWidget {
                 height: height * 0.05,
               ),
               TextField(
+                controller: _mobileController,
                 decoration: InputDecoration(
                   hintText: 'phone',
                   contentPadding: EdgeInsets.all(15),

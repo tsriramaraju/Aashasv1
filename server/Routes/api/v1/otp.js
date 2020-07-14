@@ -12,19 +12,14 @@ const otpValidation = check('otp')
   .withMessage('Please enter valid OTP')
   .trim();
 
-const emailValidation = check('email')
-  .isEmail()
-  .withMessage('Please enter valid Email format')
-  .normalizeEmail();
 const mobileValidation = check('mobile')
   .isNumeric()
   .withMessage('Please enter only number')
-
   .isLength({ min: 10, max: 10 })
   .withMessage('Please enter valid mobile number')
   .trim();
 //Generate OTP
-Router.route('/generate').post(mobileValidation, generateOTP);
+Router.route('/generate').post(generateOTP);
 
 // verify OTP
 Router.route('/').post(otpValidation, verifyOTP);
