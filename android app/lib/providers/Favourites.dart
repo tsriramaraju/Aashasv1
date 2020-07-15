@@ -44,7 +44,7 @@ class Favourites with ChangeNotifier {
           await http.post('$URI/favourites', body: body, headers: headers);
       final result = jsonDecode(res.body);
       print(result);
-      if (result["sucess"] == "sucess") return result["msg"];
+      if (result[0]["sucess"] == "sucess") return result["msg"];
 
       notifyListeners();
       return "Failed";
@@ -53,23 +53,23 @@ class Favourites with ChangeNotifier {
     }
   }
 
-  Future<void> fetchAndSetCart() async {
+  Future<void> fetchAndSetFavourites() async {
     try {
       final headers = {
         "content-type": "application/json",
         'Authorization': 'Bearer ${user.token}'
       };
-      final res = await http.get('$URI/cart', headers: headers);
+      final res = await http.get('$URI/favourites', headers: headers);
       final result = jsonDecode(res.body) as List<dynamic>;
-      List<Cart> loadedItems = [];
+      List<Favourite> loadedItems = [];
       result.forEach((element) {
-        loadedItems.add(Cart(
+        loadedItems.add(Favourite(
             title: element["prodId"]["title"],
             price: element["prodId"]["price"],
-            size: element["size"],
+            size: "XL",
             id: element["_id"],
             img: element["prodId"]["images"][0],
-            qty: 2));
+            color: element["prodId"]["color"][0]));
       });
       _items = loadedItems;
 
@@ -77,53 +77,5 @@ class Favourites with ChangeNotifier {
     } catch (err) {
       print(err);
     }
-  }
-
-  void updateCart(String id, String type) {
-    final index = _items.indexWhere((element) => element.id == id);
-    if (type == 'decrement')
-      _items[index].qty--;
-    else if (type == 'increment') _items[index].qty++;
-    notifyListeners();
-  }
-
-  Future<void> delete(String id) async {
-    try {
-      final headers = {
-        "content-type": "application/json",
-        'Authorization': 'Bearer ${user.token}'
-      };
-      final res = await http.delete('$URI/cart/$id', headers: headers);
-      final result = jsonDecode(res.body);
-      _items.removeWhere((element) => element.id == id);
-      notifyListeners();
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future<bool> deleteAll() async {
-    try {
-      final headers = {
-        "content-type": "application/json",
-        'Authorization': 'Bearer ${user.token}'
-      };
-      final res = await http.delete('$URI/cart', headers: headers);
-      final result = jsonDecode(res.body);
-      _items.clear();
-      notifyListeners();
-      return true;
-    } catch (err) {
-      print(err);
-      return false;
-    }
-  }
-
-  int get totalAmount {
-    double sum = 0;
-    _items.forEach((element) {
-      sum += (element.price * element.qty);
-    });
-    return sum.toInt();
   }
 }

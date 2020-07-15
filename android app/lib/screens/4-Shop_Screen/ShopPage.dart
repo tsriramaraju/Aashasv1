@@ -1,9 +1,11 @@
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/models/salesBanner.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/providers/salesBanner.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/AllProductsBlock.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/TopTrendsBlock.dart';
 import 'package:aashas/screens/4-Shop_Screen/pages/AllProductsPage.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +90,13 @@ class _ShopPageState extends State<ShopPage> {
         Container(
           height: widget.height * 0.70,
           child: isLoading
-              ? CircularProgressIndicator()
+              ? Container(
+                  width: widget.width * .8,
+                  child: FlareActor(
+                    LOADING,
+                    animation: 'Loading',
+                  ),
+                )
               : ListView(
                   children: [
                     DesignerCollectionBlock(

@@ -1,8 +1,10 @@
 import 'package:aashas/components/Button.dart';
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/models/cart-model.dart';
 import 'package:aashas/providers/CartData.dart';
 import 'package:aashas/screens/9-Cart_Screen/pages/Shipping.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -100,7 +102,13 @@ class _CartScreenState extends State<CartScreen> {
               preferredSize: Size.fromHeight(25)),
         ),
         body: isLoading
-            ? CircularProgressIndicator()
+            ? Container(
+                width: width * .5,
+                child: FlareActor(
+                  ROLL,
+                  animation: 'roll',
+                ),
+              )
             : Container(
                 height: height * 0.76,
 //          color: Colors.red[200],

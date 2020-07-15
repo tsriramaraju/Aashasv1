@@ -1,9 +1,11 @@
 import 'package:aashas/components/Button.dart';
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/CartData.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/ProductCards.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -91,7 +93,13 @@ class _ProductPageState extends State<ProductPage> {
     final width = MediaQuery.of(context).size.width;
 
     return isLoading
-        ? CircularProgressIndicator()
+        ? Container(
+            width: width * .8,
+            child: FlareActor(
+              CONTENT,
+              animation: 'content_loading',
+            ),
+          )
         : Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(

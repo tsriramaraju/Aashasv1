@@ -45,3 +45,7 @@ const String KThemCat3Img = 'assets/images/manyavar/23.JPG';
 const String KThemCat4Img = 'assets/images/manyavar/24.jpg';
 
 //endregion
+
+const String LOADING = 'assets/flare/loading.flr';
+const String ROLL = 'assets/flare/roll.flr';
+const String CONTENT = 'assets/flare/content_loading.flr';

@@ -1,7 +1,9 @@
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/ProductsTileSmall.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -177,7 +179,13 @@ class _AllProductsState extends State<AllProducts> {
             ),
           ),
           isLoading
-              ? Container(height: 100, child: CircularProgressIndicator())
+              ? Container(
+                  height: height * 0.5,
+                  child: FlareActor(
+                    LOADING,
+                    animation: 'Loading',
+                  ),
+                )
               : Container(
 //            color: Colors.blueGrey,
                   height: height * 0.725,

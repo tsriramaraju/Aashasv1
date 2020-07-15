@@ -2,6 +2,7 @@ import 'package:aashas/drawerHome.dart';
 import 'package:aashas/main-home.dart';
 
 import 'package:aashas/providers/CartData.dart';
+import 'package:aashas/providers/Favourites.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/providers/Users.dart';
 import 'package:aashas/providers/desginer.dart';
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: Designer()),
         ChangeNotifierProxyProvider<Users, CartData>(
           builder: (ctx, data, prevData) => CartData(data),
+        ),
+        ChangeNotifierProxyProvider<Users, Favourites>(
+          builder: (ctx, data, prevData) => Favourites(data),
         ),
 //        ChangeNotifierProvider.value(value: CartData()),
         ChangeNotifierProvider.value(value: SalesBanners()),
