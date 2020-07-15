@@ -1,4 +1,6 @@
+import 'package:aashas/models/salesBanner.dart';
 import 'package:aashas/providers/Products_Provider.dart';
+import 'package:aashas/providers/salesBanner.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/AllProductsBlock.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/TopTrendsBlock.dart';
 import 'package:aashas/screens/4-Shop_Screen/pages/AllProductsPage.dart';
@@ -52,9 +54,13 @@ class _ShopPageState extends State<ShopPage> {
     super.didChangeDependencies();
   }
 
+  List<SalesBanner> banners;
   Future<void> loadItems() async {
     final prods = Provider.of<Products>(context);
+    final bnrs = Provider.of<SalesBanners>(context);
     await prods.fetAndSetProducts();
+    await bnrs.fetchAndSetBanners();
+    banners = bnrs.banner;
     _productsData = prods;
     setState(() {
       isLoading = false;
@@ -78,7 +84,7 @@ class _ShopPageState extends State<ShopPage> {
     return Scaffold(
         body: Column(
       children: [
-        ShopOfferBanner(widget: widget),
+        ShopOfferBanner(widget: widget, banner: banners),
         Container(
           height: widget.height * 0.70,
           child: isLoading

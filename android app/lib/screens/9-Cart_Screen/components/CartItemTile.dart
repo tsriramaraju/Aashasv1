@@ -67,7 +67,7 @@ class _CartItemTileState extends State<CartItemTile> {
                     ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   widget.img,
                   width: widget.width * 0.3,
                   fit: BoxFit.cover,

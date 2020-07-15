@@ -4,6 +4,8 @@ import 'package:aashas/main-home.dart';
 import 'package:aashas/providers/CartData.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/providers/Users.dart';
+import 'package:aashas/providers/desginer.dart';
+import 'package:aashas/providers/salesBanner.dart';
 import 'package:aashas/screens/1-Welcome_Screen/Initial-Screen.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/OTP-Screen.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/Register-Screen.dart';
@@ -40,11 +42,16 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: Users()),
         ChangeNotifierProvider.value(value: Products()),
-        ChangeNotifierProvider.value(value: CartData()),
+        ChangeNotifierProvider.value(value: Designer()),
+        ChangeNotifierProxyProvider<Users, CartData>(
+          builder: (ctx, data, prevData) => CartData(data),
+        ),
+//        ChangeNotifierProvider.value(value: CartData()),
+        ChangeNotifierProvider.value(value: SalesBanners()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: MainHome.routeName,
+        initialRoute: Home.routeName,
         routes: {
           Home.routeName: (context) => Home(),
           MainHome.routeName: (context) => MainHome(),

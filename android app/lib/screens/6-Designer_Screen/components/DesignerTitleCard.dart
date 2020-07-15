@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DesignerTitleCard extends StatelessWidget {
-  const DesignerTitleCard({
-    Key key,
-    @required this.height,
-    @required this.width,
-  }) : super(key: key);
+  const DesignerTitleCard(
+      {Key key,
+      @required this.height,
+      @required this.width,
+      this.img,
+      this.name})
+      : super(key: key);
 
   final double height;
   final double width;
+  final String img;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +25,8 @@ class DesignerTitleCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.asset(
-              'assets/images/other/profile.jpg',
+            child: Image.network(
+              img,
               fit: BoxFit.cover,
               width: width * 0.4,
               height: height * 0.25,
@@ -35,7 +39,7 @@ class DesignerTitleCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                'Anitha \nKommareddy',
+                name,
                 style: GoogleFonts.roboto(
                     color: Color(KOTPButtonBGColor),
                     fontSize: 28,

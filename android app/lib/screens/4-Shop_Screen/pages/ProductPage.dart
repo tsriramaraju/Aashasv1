@@ -62,6 +62,29 @@ class _ProductPageState extends State<ProductPage> {
     });
   }
 
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool cartLoading = false;
+  void _addToCart() async {
+    setState(() {
+      cartLoading = true;
+    });
+
+    final res = await Provider.of<CartData>(
+      context,
+    ).addItem(item.name, _selectedSize, item.price, item.id, item.images[0]);
+    setState(() {
+      cartLoading = false;
+    });
+
+    if (res == "Success") {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text("Added to cart"), duration: Duration(seconds: 3)));
+      return;
+    }
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("Item Already exists"), duration: Duration(seconds: 3)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -70,6 +93,7 @@ class _ProductPageState extends State<ProductPage> {
     return isLoading
         ? CircularProgressIndicator()
         : Scaffold(
+            key: _scaffoldKey,
             appBar: AppBar(
               backgroundColor: Color(KNavBGColor),
               elevation: 0,
@@ -162,16 +186,12 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   Align(
                     child: buildButton(
-                        onTap: () {
-                          Provider.of<CartData>(
-                            context,
-                          ).addItem(item.name, _selectedSize, item.price,
-                              item.id, item.images[0]);
-                        },
+                        onTap: _addToCart,
                         textColor: KOTPButtonTextColor,
                         fontSize: 12,
                         text: '+ Add to Bag',
                         bgColor: KOTPButtonBGColor,
+                        loading: cartLoading,
                         width: width * .6),
                   )
                 ],

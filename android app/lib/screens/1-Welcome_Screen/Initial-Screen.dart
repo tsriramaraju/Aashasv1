@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
   void _load(BuildContext context) async {
 //    final products = Provider.of<Products>(context);
 //    await products.fetAndSetProducts();
-    Navigator.pushReplacementNamed(context, MainHome.routeName);
+    Navigator.pushReplacementNamed(context, WelcomeScreen.routeName);
   }
 
   static const routeName = '/';

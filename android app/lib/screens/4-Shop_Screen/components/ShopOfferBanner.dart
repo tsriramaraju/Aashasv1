@@ -1,3 +1,4 @@
+import 'package:aashas/models/salesBanner.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -5,12 +6,11 @@ import '../ShopPage.dart';
 import 'CarouselItems.dart';
 
 class ShopOfferBanner extends StatelessWidget {
-  const ShopOfferBanner({
-    Key key,
-    @required this.widget,
-  }) : super(key: key);
+  const ShopOfferBanner({Key key, @required this.widget, this.banner})
+      : super(key: key);
 
   final ShopPage widget;
+  final List<SalesBanner> banner;
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +52,12 @@ class ShopOfferBanner extends StatelessWidget {
           ),
           CarouselSlider(
             items: [
-              ShopCarouselItems(
-                widget: widget,
-                description: 'For Selected Spring Style',
-                title: 'Spring Collection',
-                offer: '20% OFF',
-              ),
-              ShopCarouselItems(
-                widget: widget,
-                description: 'For Selected Spring Style',
-                title: 'Summer Collection',
-                offer: '40% OFF',
-              ),
-              ShopCarouselItems(
-                widget: widget,
-                description: 'For Selected Spring Style',
-                title: 'Winter Collection',
-                offer: '100% OFF',
-              ),
+              ...banner.map((e) => ShopCarouselItems(
+                    widget: widget,
+                    title: e.title,
+                    offer: e.discount,
+                    description: 'Spring Collection',
+                  )),
             ],
             options: CarouselOptions(
                 enableInfiniteScroll: true,

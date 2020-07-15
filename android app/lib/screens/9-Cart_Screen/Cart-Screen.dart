@@ -18,10 +18,39 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final cartData = CartData();
   List<Cart> items;
   int sum = 0;
   bool checkAll = false;
+
+  bool isLoading = false;
+  var _isInit = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      setState(() {
+        isLoading = true;
+      });
+      print("Product Page init state");
+      await loadItem();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  Future<void> loadItem() async {
+    final cart = Provider.of<CartData>(context);
+    await cart.fetchAndSetCart();
+    items = cart.items;
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   void _handleCheckout() {
     Navigator.pushNamed(context, ShippingPage.routeName);
@@ -63,71 +92,74 @@ class _CartScreenState extends State<CartScreen> {
               ),
               preferredSize: Size.fromHeight(25)),
         ),
-        body: Container(
-          height: height * 0.76,
+        body: isLoading
+            ? CircularProgressIndicator()
+            : Container(
+                height: height * 0.76,
 //          color: Colors.red[200],
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(
-                        activeColor: Color(KOTPButtonBGColor),
-                        value: checkAll,
-                        onChanged: (value) {
-                          setState(() {
-                            checkAll = value;
-                          });
-                        },
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                              activeColor: Color(KOTPButtonBGColor),
+                              value: checkAll,
+                              onChanged: (value) {
+                                setState(() {
+                                  checkAll = value;
+                                });
+                              },
+                            ),
+                            Text(
+                              'Select all products (5)',
+                              style: GoogleFonts.raleway(
+                                  color:
+                                      Color(KOTPButtonBGColor).withOpacity(0.6),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        checkAll
+                            ? FlatButton(
+                                onPressed: () {
+                                  checkAll = false;
+                                  data.deleteAll();
+                                },
+                                child: Text(
+                                  'Delete',
+                                  style: GoogleFonts.raleway(
+                                      color: Color(KOTPButtonBGColor),
+                                      fontWeight: FontWeight.w800),
+                                  textAlign: TextAlign.right,
+                                ),
+                              )
+                            : Container()
+                      ],
+                    ),
+                    Container(
+                      height: height * 0.695,
+                      child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: items.length,
+                        itemBuilder: (context, index) => CartItemTile(
+                          height: height,
+                          width: width,
+                          checkAll: checkAll,
+                          img: items[index].img,
+                          id: items[index].id,
+                          size: items[index].size,
+                          title: items[index].title,
+                          price: items[index].price,
+                          qty: items[index].qty,
+                        ),
                       ),
-                      Text(
-                        'Select all products (5)',
-                        style: GoogleFonts.raleway(
-                            color: Color(KOTPButtonBGColor).withOpacity(0.6),
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  checkAll
-                      ? FlatButton(
-                          onPressed: () {
-                            checkAll = false;
-                            data.deleteAll();
-                          },
-                          child: Text(
-                            'Delete',
-                            style: GoogleFonts.raleway(
-                                color: Color(KOTPButtonBGColor),
-                                fontWeight: FontWeight.w800),
-                            textAlign: TextAlign.right,
-                          ),
-                        )
-                      : Container()
-                ],
-              ),
-              Container(
-                height: height * 0.695,
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) => CartItemTile(
-                    height: height,
-                    width: width,
-                    checkAll: checkAll,
-                    img: items[index].img,
-                    id: items[index].id,
-                    size: items[index].size,
-                    title: items[index].title,
-                    price: items[index].price,
-                    qty: items[index].qty,
-                  ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
         bottomSheet: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
           height: height * 0.1,

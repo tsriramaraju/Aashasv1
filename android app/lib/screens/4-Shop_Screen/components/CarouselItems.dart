@@ -16,7 +16,7 @@ class ShopCarouselItems extends StatelessWidget {
 
   final ShopPage widget;
   final String title;
-  final String offer;
+  final int offer;
   final String description;
 
   @override
@@ -29,8 +29,7 @@ class ShopCarouselItems extends StatelessWidget {
           children: [
             Text(
               title,
-              style: GoogleFonts.roboto(
-                  color: Colors.white, fontSize: widget.height * 0.02),
+              style: GoogleFonts.roboto(color: Colors.white, fontSize: 20),
             ),
             Divider(
               thickness: 2,
@@ -40,9 +39,9 @@ class ShopCarouselItems extends StatelessWidget {
               indent: 5,
             ),
             Text(
-              offer,
+              "$offer %",
               style: GoogleFonts.roboto(
-                fontSize: widget.height * 0.045,
+                fontSize: 40,
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
               ),
@@ -50,7 +49,7 @@ class ShopCarouselItems extends StatelessWidget {
             Text(
               description,
               style: GoogleFonts.roboto(
-                fontSize: widget.height * 0.015,
+                fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
               ),

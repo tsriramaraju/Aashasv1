@@ -1,41 +1,81 @@
 import 'dart:collection';
-
+import 'dart:convert';
+import 'package:aashas/helpers/constants/variables.dart';
+import 'package:aashas/providers/Users.dart';
+import 'package:http/http.dart' as http;
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/models/cart-model.dart';
 import 'package:flutter/material.dart';
+import '';
 
 class CartData with ChangeNotifier {
+  final Users user;
+  CartData(this.user);
   List<Cart> _items = [
-    Cart(
-        price: 90,
-        id: 'c1',
-        qty: 5,
-        size: 'M',
-        title: 'hello world',
-        img: KOpeningImage),
-    Cart(
-        price: 90,
-        id: 'c2',
-        qty: 5,
-        size: 'M',
-        title: 'hello world',
-        img: KMaleCat3Img)
+//    Cart(
+//        price: 90,
+//        id: 'c1',
+//        qty: 5,
+//        size: 'M',
+//        title: 'hello world',
+//        img: KOpeningImage),
+//    Cart(
+//        price: 90,
+//        id: 'c2',
+//        qty: 5,
+//        size: 'M',
+//        title: 'hello world',
+//        img: KMaleCat3Img)
   ];
 
   List<Cart> get items {
     return UnmodifiableListView(_items);
   }
 
-  void addItem(String title, String size, double price, String id, String img) {
-    final index = _items.indexWhere((element) => element.id == id);
+  Future<String> addItem(
+      String title, String size, double price, String id, String img) async {
+    try {
+      final headers = {
+        "content-type": "application/json",
+        'Authorization': 'Bearer ${user.token}'
+      };
+      final body = jsonEncode({"prodId": id, "size": size});
+      final res = await http.post('$URI/cart', body: body, headers: headers);
+      final result = jsonDecode(res.body);
+      print(result);
+      if (result["sucess"] == "sucess") return "Success";
 
-    if (index > 0) {
-      _items[index].qty++;
-    } else
-      _items.add(
-        Cart(title: title, size: size, qty: 1, price: price, id: id, img: img),
-      );
-    notifyListeners();
+      notifyListeners();
+      return "Failed";
+    } catch (err) {
+      return "Failed";
+    }
+  }
+
+  Future<void> fetchAndSetCart() async {
+    try {
+      final headers = {
+        "content-type": "application/json",
+        'Authorization': 'Bearer ${user.token}'
+      };
+      final res = await http.get('$URI/cart', headers: headers);
+      final result = jsonDecode(res.body) as List<dynamic>;
+      List<Cart> loadedItems = [];
+      result.forEach((element) {
+        loadedItems.add(Cart(
+            title: element["prodId"]["title"],
+            price: element["prodId"]["price"],
+            size: element["size"],
+            id: element["_id"],
+            img: element["prodId"]["images"][0],
+            qty: 2));
+      });
+      _items = loadedItems;
+
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
   }
 
   void updateCart(String id, String type) {
@@ -51,9 +91,30 @@ class CartData with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteAll() {
-    _items.clear();
-    notifyListeners();
+  Future<void> deleteAll() async {
+    try {
+      final headers = {
+        "content-type": "application/json",
+        'Authorization': 'Bearer ${user.token}'
+      };
+      final res = await http.delete('$URI/cart', headers: headers);
+      final result = jsonDecode(res.body) as List<dynamic>;
+      List<Cart> loadedItems = [];
+      result.forEach((element) {
+        loadedItems.add(Cart(
+            title: element["prodId"]["title"],
+            price: element["prodId"]["price"],
+            size: element["size"],
+            id: element["_id"],
+            img: element["prodId"]["images"][0],
+            qty: 2));
+      });
+      _items = loadedItems;
+
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
   }
 
   int get totalAmount {

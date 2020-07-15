@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DesignerAboutCard extends StatelessWidget {
-  const DesignerAboutCard({
-    Key key,
-    @required this.height,
-  }) : super(key: key);
+  const DesignerAboutCard({Key key, @required this.height, this.bio})
+      : super(key: key);
 
   final double height;
+  final String bio;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class DesignerAboutCard extends StatelessWidget {
             style: GoogleFonts.roboto(fontSize: 22),
           ),
           Text(
-            'Aasha\'s Tailoring has been been the offering the finest women\’s tailoring service for over 5 years. With access to the best fabrics and experienced Tailors, Aasha\’s can offer the very best of women\’s tailoring.',
+            bio,
             style: GoogleFonts.roboto(
                 fontSize: 14,
                 wordSpacing: 2,

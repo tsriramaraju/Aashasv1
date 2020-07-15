@@ -35,7 +35,7 @@ exports.addCart = async (req, res, next) => {
       { new: true, runValidators: true }
     );
     console.log(user);
-    res.json([{ sucess: 'sucess', msg: 'Cart added suceffully' }]);
+    res.json({ sucess: 'sucess', msg: 'Cart added suceffully' });
   } catch (error) {
     next(error);
   }
@@ -74,7 +74,7 @@ exports.clearCart = async (req, res, next) => {
       { new: true, runValidators: true }
     );
     await Cart.deleteMany({ userId: req.user._id });
-    res.json([{ status: 'success', msg: 'Cart cleared' }]);
+    res.json({ status: 'success', msg: 'Cart cleared' });
   } catch (error) {
     next(error);
   }
