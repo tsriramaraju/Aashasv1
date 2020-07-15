@@ -89,7 +89,7 @@ exports.loginMobile = async (req, res, next) => {
       expiresIn: 35000,
     });
     //send response
-    res.json({ token, msg: getOtp, diff });
+    res.json({ token, msg: 'Login success' });
   } catch (error) {
     next(error);
   }

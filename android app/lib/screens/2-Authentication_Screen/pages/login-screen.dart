@@ -2,11 +2,14 @@ import 'package:aashas/components/Button.dart';
 import 'package:aashas/drawerHome.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/styles.dart';
-import 'package:aashas/screens/1-Welcome_Screen/pages/OTP-Screen.dart';
+import 'package:aashas/providers/Users.dart';
+
 import 'package:aashas/screens/1-Welcome_Screen/pages/mobile-Registration.dart';
+import 'package:aashas/screens/2-Authentication_Screen/pages/mobile-login.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -15,11 +18,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-//  TextEditingController _nameController;
   TextEditingController _emailController;
   TextEditingController _passwordController;
 
-//  FocusNode _nameFocusNode;
   FocusNode _emailFocusNode;
   FocusNode _passwordFocusNode;
 
@@ -45,12 +46,41 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordFocusNode.dispose();
   }
 
-  void _handleSignIn(BuildContext context, String type) {
-    if (type != 'mobile')
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool emailVal = true;
+  bool passwordVal = true;
+  bool isLoading = false;
+  void validate(BuildContext context) {
+    setState(() {
+      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              .hasMatch(_emailController.text)
+          ? emailVal = true
+          : emailVal = false;
+      _passwordController.text.length > 5
+          ? passwordVal = true
+          : passwordVal = false;
+    });
+
+    if (emailVal && passwordVal) _handleSignIn(context);
+  }
+
+  void _handleSignIn(BuildContext context) async {
+    final user = Provider.of<Users>(context);
+    isLoading = true;
+    final res =
+        await user.emailLogin(_emailController.text, _passwordController.text);
+    setState(() {
+      isLoading = false;
+    });
+    _scaffoldKey.currentState.showSnackBar(
+        SnackBar(content: Text(res), duration: Duration(seconds: 3)));
+    if (res == "Login success")
       Navigator.pushNamedAndRemoveUntil(
           context, DrawerHome.routeName, (route) => false);
-    else
-      Navigator.pushNamed(context, OTPScreen.routeName);
+  }
+
+  void _handleMobileLogin(BuildContext context) {
+    Navigator.pushNamed(context, MobileLoginScreen.routeName);
   }
 
   @override
@@ -59,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Color(KLSBGColor),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(25),
@@ -91,6 +122,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           hintText: "Email",
+                          errorText:
+                              emailVal ? null : "Please enter valid email",
+                          errorStyle: GoogleFonts.roboto(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red,
+                          ),
                           contentPadding: EdgeInsets.all(25),
                           hintStyle: GoogleFonts.roboto(
                               fontWeight: FontWeight.w500,
@@ -113,6 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderSide: BorderSide.none,
                           ),
                           hintText: "Password",
+                          errorText: passwordVal
+                              ? null
+                              : "Password must be min 6 characters long ",
+                          errorStyle: GoogleFonts.roboto(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red,
+                          ),
                           suffix: GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -154,7 +198,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: 'Login',
                     bgColor: KLSButtonBGColor,
                     width: width * .75,
-                    onTap: () => _handleSignIn(context, 'email'),
+                    loading: isLoading,
+                    onTap: () => validate(context),
                   ),
                 ),
                 SizedBox(
@@ -180,13 +225,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: width * .40,
                         iconColor: KLSButtonIconColor,
                         bgColor: KLSFBColor,
-                        onTap: () => _handleSignIn(context, 'facebook')),
+                        onTap: null),
                     buildButton(
                         icon: FontAwesomeIcons.twitter,
                         width: width * .40,
                         iconColor: KLSButtonIconColor,
                         bgColor: KLSTwitterColor,
-                        onTap: () => _handleSignIn(context, 'twitter')),
+                        onTap: null),
                   ],
                 ),
                 SizedBox(
@@ -200,13 +245,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: width * .40,
                         iconColor: KLSButtonIconColor,
                         bgColor: KLSGoogleColor,
-                        onTap: () => _handleSignIn(context, 'google')),
+                        onTap: null),
                     buildButton(
                         icon: FontAwesomeIcons.phone,
                         width: width * .40,
                         iconColor: KLSButtonIconColor,
                         bgColor: KLSMobileColor,
-                        onTap: () => _handleSignIn(context, 'mobile')),
+                        onTap: () => _handleMobileLogin(context)),
                   ],
                 )
               ],

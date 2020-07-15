@@ -8,41 +8,41 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
-class OTPScreen extends StatefulWidget {
-  static const routeName = '/OTP-Screen';
+class OTPLoginScreen extends StatefulWidget {
+  static const routeName = '/OTP-Login';
   @override
-  _OTPScreenState createState() => _OTPScreenState();
+  _OTPLoginScreenState createState() => _OTPLoginScreenState();
 }
 
-class _OTPScreenState extends State<OTPScreen> {
+class _OTPLoginScreenState extends State<OTPLoginScreen> {
   bool isLoading = false;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
   void _handleSubmit(BuildContext context) async {
+    final mobile = ModalRoute.of(context).settings.arguments;
+    print(mobile);
     final user = Provider.of<Users>(context);
     setState(() {
       isLoading = true;
     });
-    final result = await user.verifyOTP(int.parse(_otpController.text));
+
+    final res = await user.mobileLogin(mobile, int.parse(_otpController.text));
     setState(() {
       isLoading = false;
     });
-    if (result != "Success") {
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(result),
-        duration: Duration(seconds: 3),
-      ));
-      return;
-    }
-    Navigator.pushNamedAndRemoveUntil(
-        context, DrawerHome.routeName, (route) => false);
+    _scaffoldKey.currentState.showSnackBar(
+        SnackBar(content: Text(res), duration: Duration(seconds: 3)));
+    if (res == "Login success")
+      Navigator.pushNamedAndRemoveUntil(
+          context, DrawerHome.routeName, (route) => false);
   }
 
   void _handleResend(BuildContext context) async {
+    final mobile = ModalRoute.of(context).settings.arguments;
     setState(() {
       isLoading = true;
     });
     final user = Provider.of<Users>(context);
-    await user.generateOTP();
+    await user.generateOTP(number: mobile);
     setState(() {
       isLoading = false;
       _scaffoldKey.currentState.showSnackBar(SnackBar(

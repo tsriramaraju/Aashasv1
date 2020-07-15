@@ -1,4 +1,5 @@
 import 'package:aashas/drawerHome.dart';
+import 'package:aashas/providers/Auth.dart';
 import 'package:aashas/providers/CartData.dart';
 import 'package:aashas/providers/Users.dart';
 import 'package:aashas/screens/1-Welcome_Screen/Initial-Screen.dart';
@@ -8,6 +9,8 @@ import 'package:aashas/screens/1-Welcome_Screen/pages/Welcome-Screen.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/mobile-Registration.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/name-registration.dart';
 import 'package:aashas/screens/2-Authentication_Screen/pages/login-screen.dart';
+import 'package:aashas/screens/2-Authentication_Screen/pages/mobile-login.dart';
+import 'package:aashas/screens/2-Authentication_Screen/pages/otp-login.dart';
 import 'package:aashas/screens/9-Cart_Screen/pages/Failed.dart';
 import 'package:aashas/screens/9-Cart_Screen/pages/Payment.dart';
 import 'package:aashas/screens/9-Cart_Screen/pages/Shipping.dart';
@@ -33,8 +36,12 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: CartData()),
+        ChangeNotifierProvider.value(value: Auth()),
         ChangeNotifierProvider.value(value: Users()),
+//        ChangeNotifierProxyProvider<Auth, Users>(
+//          builder: (ctx, auth, prevUsers) => Users(),
+//        ),
+        ChangeNotifierProvider.value(value: CartData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -46,8 +53,10 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (context) => RegisterScreen(),
           MobileRegistrationScreen.routeName: (context) =>
               MobileRegistrationScreen(),
+          MobileLoginScreen.routeName: (context) => MobileLoginScreen(),
           NameRegistrationScreen.routeName: (context) =>
               NameRegistrationScreen(),
+          OTPLoginScreen.routeName: (context) => OTPLoginScreen(),
           OTPScreen.routeName: (context) => OTPScreen(),
           LoginScreen.routeName: (context) => LoginScreen(),
           ShippingPage.routeName: (context) => ShippingPage(),
