@@ -56,13 +56,20 @@ class _CartScreenState extends State<CartScreen> {
     Navigator.pushNamed(context, ShippingPage.routeName);
   }
 
+  bool delLoading = false;
+  void deleteAll() async {
+    setState(() {
+      delLoading = true;
+    });
+    final res = await Provider.of<CartData>(context).deleteAll();
+    setState(() {
+      delLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<CartData>(
-      context,
-    );
-    sum = data.totalAmount;
-    items = data.items;
+    sum = 123;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark.copyWith();
@@ -126,15 +133,17 @@ class _CartScreenState extends State<CartScreen> {
                             ? FlatButton(
                                 onPressed: () {
                                   checkAll = false;
-                                  data.deleteAll();
+                                  deleteAll();
                                 },
-                                child: Text(
-                                  'Delete',
-                                  style: GoogleFonts.raleway(
-                                      color: Color(KOTPButtonBGColor),
-                                      fontWeight: FontWeight.w800),
-                                  textAlign: TextAlign.right,
-                                ),
+                                child: delLoading
+                                    ? CircularProgressIndicator()
+                                    : Text(
+                                        'Delete',
+                                        style: GoogleFonts.raleway(
+                                            color: Color(KOTPButtonBGColor),
+                                            fontWeight: FontWeight.w800),
+                                        textAlign: TextAlign.right,
+                                      ),
                               )
                             : Container()
                       ],

@@ -28,7 +28,7 @@ exports.toggleFav = async (req, res, next) => {
       );
 
       await Favourite.deleteOne({ _id: isFavId });
-      return res.json([{ status: 'success', msg: 'Favourite  removed' }]);
+      return res.json({ status: 'success', msg: 'Favourite  removed' });
     }
 
     //add fav
@@ -48,7 +48,7 @@ exports.toggleFav = async (req, res, next) => {
       { new: true, runValidators: true }
     );
     // console.log(user);
-    res.json([{ sucess: 'sucess', msg: 'Favourites added suceffully' }]);
+    res.json({ sucess: 'sucess', msg: 'Favourites added suceffully' });
   } catch (err) {
     next(err);
   }

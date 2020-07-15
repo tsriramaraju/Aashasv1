@@ -34,11 +34,17 @@ class CartItemTile extends StatefulWidget {
   _CartItemTileState createState() => _CartItemTileState();
 }
 
+bool itemLoading = false;
+
 class _CartItemTileState extends State<CartItemTile> {
-  void handleDelete(BuildContext context) {
-    Provider.of<CartData>(
-      context,
-    ).delete(widget.id);
+  void handleDelete(BuildContext context) async {
+    setState(() {
+      itemLoading = true;
+    });
+    final res = await Provider.of<CartData>(context).delete(widget.id);
+    setState(() {
+      itemLoading = false;
+    });
   }
 
   void handleUpdate(BuildContext context, String type) {
@@ -67,11 +73,13 @@ class _CartItemTileState extends State<CartItemTile> {
                     ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  widget.img,
-                  width: widget.width * 0.3,
-                  fit: BoxFit.cover,
-                ),
+                child: itemLoading
+                    ? CircularProgressIndicator()
+                    : Image.network(
+                        widget.img,
+                        width: widget.width * 0.3,
+                        fit: BoxFit.cover,
+                      ),
               ),
               SizedBox(
                 width: 15,
