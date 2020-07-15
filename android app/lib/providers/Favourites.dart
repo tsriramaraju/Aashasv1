@@ -44,7 +44,7 @@ class Favourites with ChangeNotifier {
           await http.post('$URI/favourites', body: body, headers: headers);
       final result = jsonDecode(res.body);
       print(result);
-      if (result["sucess"] == "sucess") return "Success";
+      if (result["sucess"] == "sucess") return result["msg"];
 
       notifyListeners();
       return "Failed";
