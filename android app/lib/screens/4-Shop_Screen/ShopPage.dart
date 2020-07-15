@@ -4,6 +4,7 @@ import 'package:aashas/screens/4-Shop_Screen/components/TopTrendsBlock.dart';
 import 'package:aashas/screens/4-Shop_Screen/pages/AllProductsPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'components/DesignerCollectionBlock.dart';
 import 'components/ShopOfferBanner.dart';
@@ -30,7 +31,36 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
-  final _productsData = Products();
+  bool isLoading = false;
+  var _isInit = true;
+  var _productsData;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      setState(() {
+        isLoading = true;
+      });
+      print("shop screen init state");
+      await loadItems();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  Future<void> loadItems() async {
+    final prods = Provider.of<Products>(context);
+    await prods.fetAndSetProducts();
+    _productsData = prods;
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   void _showAllProducts(BuildContext context) {
     Navigator.push(
         context,
@@ -50,38 +80,40 @@ class _ShopPageState extends State<ShopPage> {
       children: [
         ShopOfferBanner(widget: widget),
         Container(
-          height: widget.height * 0.72,
-          child: ListView(
-            children: [
-              DesignerCollectionBlock(
-                onFavouritePressed: widget.onFavouritesPressed,
-                onCartPressed: widget.onCartPressed,
-                showAllProducts: _showAllProducts,
-                items: _productsData.designerProducts,
-                width: widget.width,
-                height: widget.height,
-              ),
-              TopTrendsBlock(
-                onFavouritePressed: widget.onFavouritesPressed,
-                onCartPressed: widget.onCartPressed,
-                showAllProducts: _showAllProducts,
-                width: widget.width,
-                height: widget.height,
-                items: _productsData.topTrends,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              AllProductsBlock(
-                onFavouritePressed: widget.onFavouritesPressed,
-                onCartPressed: widget.onCartPressed,
-                showAllProducts: _showAllProducts,
-                width: widget.width,
-                height: widget.height,
-                items: _productsData.filterProducts(null),
-              ),
-            ],
-          ),
+          height: widget.height * 0.70,
+          child: isLoading
+              ? CircularProgressIndicator()
+              : ListView(
+                  children: [
+                    DesignerCollectionBlock(
+                      onFavouritePressed: widget.onFavouritesPressed,
+                      onCartPressed: widget.onCartPressed,
+                      showAllProducts: _showAllProducts,
+                      items: _productsData.designerProducts,
+                      width: widget.width,
+                      height: widget.height,
+                    ),
+                    TopTrendsBlock(
+                      onFavouritePressed: widget.onFavouritesPressed,
+                      onCartPressed: widget.onCartPressed,
+                      showAllProducts: _showAllProducts,
+                      width: widget.width,
+                      height: widget.height,
+                      items: _productsData.topTrends,
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    AllProductsBlock(
+                      onFavouritePressed: widget.onFavouritesPressed,
+                      onCartPressed: widget.onCartPressed,
+                      showAllProducts: _showAllProducts,
+                      width: widget.width,
+                      height: widget.height,
+                      items: _productsData.filterProducts(null),
+                    ),
+                  ],
+                ),
         )
       ],
     ));

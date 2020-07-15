@@ -65,7 +65,7 @@ class ProductsTile extends StatelessWidget {
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15),
                     ),
-                    child: Image.asset(
+                    child: Image.network(
                       img,
                       fit: BoxFit.cover,
                     ),

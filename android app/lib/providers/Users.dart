@@ -124,6 +124,7 @@ class Users with ChangeNotifier {
       print(resData);
       if (!(resData is List)) {
         _token = resData["token"];
+        await loadUser();
         return resData["msg"];
       }
       resData.forEach((element) {
@@ -147,6 +148,7 @@ class Users with ChangeNotifier {
       print(resData);
       if (!(resData is List)) {
         _token = resData["token"];
+        await loadUser();
         return resData["msg"];
       }
       resData.forEach((element) {
@@ -157,6 +159,22 @@ class Users with ChangeNotifier {
     } catch (err) {
       print(err);
       return "something is wrong";
+    }
+  }
+
+  Future<void> loadUser() async {
+    try {
+      final headers = {
+        "content-type": "application/json",
+        'Authorization': 'Bearer $_token'
+      };
+      final result = await http.get('$URI/users', headers: headers);
+      final resData = jsonDecode(result.body);
+      _email = resData["email"];
+      _name = resData["name"];
+      _mobile = resData["mobile"];
+    } catch (err) {
+      print(err);
     }
   }
 }

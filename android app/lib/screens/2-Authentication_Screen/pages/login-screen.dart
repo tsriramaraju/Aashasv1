@@ -2,6 +2,7 @@ import 'package:aashas/components/Button.dart';
 import 'package:aashas/drawerHome.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/styles.dart';
+import 'package:aashas/main-home.dart';
 import 'package:aashas/providers/Users.dart';
 
 import 'package:aashas/screens/1-Welcome_Screen/pages/mobile-Registration.dart';
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         SnackBar(content: Text(res), duration: Duration(seconds: 3)));
     if (res == "Login success")
       Navigator.pushNamedAndRemoveUntil(
-          context, DrawerHome.routeName, (route) => false);
+          context, MainHome.routeName, (route) => false);
   }
 
   void _handleMobileLogin(BuildContext context) {

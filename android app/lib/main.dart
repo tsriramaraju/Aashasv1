@@ -1,6 +1,8 @@
 import 'package:aashas/drawerHome.dart';
-import 'package:aashas/providers/Auth.dart';
+import 'package:aashas/main-home.dart';
+
 import 'package:aashas/providers/CartData.dart';
+import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/providers/Users.dart';
 import 'package:aashas/screens/1-Welcome_Screen/Initial-Screen.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/OTP-Screen.dart';
@@ -36,19 +38,17 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: Auth()),
         ChangeNotifierProvider.value(value: Users()),
-//        ChangeNotifierProxyProvider<Auth, Users>(
-//          builder: (ctx, auth, prevUsers) => Users(),
-//        ),
+        ChangeNotifierProvider.value(value: Products()),
         ChangeNotifierProvider.value(value: CartData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: Home.routeName,
+        initialRoute: MainHome.routeName,
         routes: {
           Home.routeName: (context) => Home(),
-          DrawerHome.routeName: (context) => DrawerHome(),
+          MainHome.routeName: (context) => MainHome(),
+//          DrawerHome.routeName: (context) => DrawerHome(),
           WelcomeScreen.routeName: (context) => WelcomeScreen(),
           RegisterScreen.routeName: (context) => RegisterScreen(),
           MobileRegistrationScreen.routeName: (context) =>

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 enum FilterOptions { all, male, female, kids }
 
@@ -26,22 +27,46 @@ class AllProducts extends StatefulWidget {
 }
 
 class _AllProductsState extends State<AllProducts> {
-  final productsData = Products();
+//  final productsData = Products();
   List<Product> items;
   String filter;
 
+  bool isLoading = false;
+  var _isInit = true;
   @override
   void initState() {
     super.initState();
-    filter = widget.filter;
-    items =
-        productsData.filterProducts(widget.filter, subFilter: widget.subFilter);
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      setState(() {
+        isLoading = true;
+      });
+      print("All products init state");
+      filter = widget.filter;
+      items = [];
+      await loadItems();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  Future<void> loadItems() async {
+    final prods = Provider.of<Products>(context);
+    await prods.fetAndSetProducts();
+    items = prods.filterProducts(widget.filter, subFilter: widget.subFilter);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void _handleChanges(String index) {
     setState(() {
       filter = index;
-      items = productsData.filterProducts(index);
+      final prods = Provider.of<Products>(context);
+      items = prods.filterProducts(index);
     });
   }
 
@@ -151,35 +176,40 @@ class _AllProductsState extends State<AllProducts> {
               ],
             ),
           ),
-          Container(
+          isLoading
+              ? Container(height: 100, child: CircularProgressIndicator())
+              : Container(
 //            color: Colors.blueGrey,
-            height: height * 0.725,
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                  childAspectRatio: 1 / 1.8),
-              padding: EdgeInsets.all(10),
-              physics: BouncingScrollPhysics(),
-              children: [
-                ...items.map((index) {
-                  return ProductsTile(
-                    id: index.id,
-                    onCartPressed: widget.onCartPressed,
-                    onFavouritePressed: widget.onFavouritesPressed,
-                    height: height,
-                    width: width,
-                    isNew: index.isNew,
-                    price: index.price,
-                    isFavourite: index.isFavourite,
-                    img: index.images[0],
-                    title: index.name,
-                  );
-                }).toList()
-              ],
-            ),
-          ),
+                  height: height * 0.725,
+                  child: GridView(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        childAspectRatio: 1 / 1.8),
+                    padding: EdgeInsets.all(10),
+                    physics: BouncingScrollPhysics(),
+                    children: [
+                      ...items.map((index) {
+                        return ProductsTile(
+                          id: index.id,
+                          onCartPressed: widget.onCartPressed,
+                          onFavouritePressed: widget.onFavouritesPressed,
+                          height: height,
+                          width: width,
+                          isNew: index.isNew,
+                          price: index.price,
+                          isFavourite: index.isFavourite,
+                          img: index.images[0],
+                          title: index.name,
+                        );
+                      }).toList()
+                    ],
+                  )
+//              Consumer<Products>(builder: (ctx, data, child) {
+//                return
+//              })
+                  ),
         ],
       ),
     );

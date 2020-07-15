@@ -75,8 +75,8 @@ class SuccessPage extends StatelessWidget {
             child: Align(
               child: buildButton(
                   onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, DrawerHome.routeName, (route) => false);
+//                    Navigator.pushNamedAndRemoveUntil(
+//                        context, DrawerHome.routeName, (route) => false);
                   },
                   width: width * 0.7,
                   text: 'Continue Shopping',

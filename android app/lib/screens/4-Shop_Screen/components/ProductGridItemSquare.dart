@@ -52,7 +52,7 @@ class ProductGridTileSquare extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(
+                    child: Image.network(
                       img,
                       fit: BoxFit.cover,
                     ),

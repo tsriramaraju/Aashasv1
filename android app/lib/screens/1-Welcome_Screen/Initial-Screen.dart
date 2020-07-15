@@ -2,13 +2,22 @@ import 'dart:ui';
 
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
+import 'package:aashas/main-home.dart';
+import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/screens/1-Welcome_Screen/pages/Welcome-Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
+  void _load(BuildContext context) async {
+//    final products = Provider.of<Products>(context);
+//    await products.fetAndSetProducts();
+    Navigator.pushReplacementNamed(context, MainHome.routeName);
+  }
+
   static const routeName = '/';
   @override
   Widget build(BuildContext context) {
@@ -52,10 +61,7 @@ class Home extends StatelessWidget {
                     color: Color(KInitialScreenArrowColor).withOpacity(0.7),
                     size: height * 0.05,
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(
-                        context, WelcomeScreen.routeName);
-                  }),
+                  onPressed: () => _load(context)),
             ),
           ),
         ],

@@ -47,7 +47,7 @@ class ProductGridTileRectangle extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.asset(
+              child: Image.network(
                 img,
                 fit: BoxFit.cover,
               ),

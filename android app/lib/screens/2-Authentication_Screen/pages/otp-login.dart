@@ -2,6 +2,7 @@ import 'package:aashas/components/Button.dart';
 import 'package:aashas/drawerHome.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/text.dart';
+import 'package:aashas/main-home.dart';
 import 'package:aashas/providers/Users.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +34,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
         SnackBar(content: Text(res), duration: Duration(seconds: 3)));
     if (res == "Login success")
       Navigator.pushNamedAndRemoveUntil(
-          context, DrawerHome.routeName, (route) => false);
+          context, MainHome.routeName, (route) => false);
   }
 
   void _handleResend(BuildContext context) async {

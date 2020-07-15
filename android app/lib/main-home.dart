@@ -1,5 +1,6 @@
 import 'package:aashas/bottom_Navigation.dart';
 import 'package:aashas/providers/Products_Provider.dart';
+import 'package:aashas/providers/Users.dart';
 import 'package:aashas/screens/10-Favourite_Screen/Favourite-Screen.dart';
 import 'package:aashas/screens/3-Category_Screen/Category-Screen.dart';
 import 'package:aashas/screens/4-Shop_Screen/Shop-Screen.dart';
@@ -9,9 +10,11 @@ import 'package:aashas/screens/6-Designer_Screen/Designer-Screen.dart';
 import 'package:aashas/screens/9-Cart_Screen/Cart-Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class MainHome extends KFDrawerContent {
+class MainHome extends StatefulWidget {
+  static const routeName = '/main-home';
   @override
   _NavigationHomeState createState() => _NavigationHomeState();
 }
@@ -27,6 +30,18 @@ class _NavigationHomeState extends State<MainHome> {
   };
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
   final products = Products();
+  bool isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    print("letsee");
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print("from main destroy");
+  }
 
   void _selectTab(TabItem tabItem) {
     if (tabItem == _currentTab) {
@@ -78,8 +93,17 @@ class _NavigationHomeState extends State<MainHome> {
         ));
   }
 
+  void _load(BuildContext context) async {
+    final products = Provider.of<Products>(context);
+    final prod = products.products;
+    prod.forEach((element) {
+      print(element.name);
+    });
+//    await products.fetAndSetProducts();
+  }
+
   void _handleMenu() {
-    widget.onMenuPressed();
+//    widget.onMenuPressed();
   }
 
   @override
@@ -115,46 +139,50 @@ class _NavigationHomeState extends State<MainHome> {
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
       },
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: Stack(
-          children: [
-            _buildOffstagePage(
-                tabItem: TabItem.shop,
-                child: ShopScreen(
-                  navigatorKey: _navigatorKeys[TabItem.shop],
-                  onMenuPressed: _handleMenu,
-                  onCartPressed: _handleCart,
-                  onFavouritesPressed: _handleFavourite,
-                )),
-            _buildOffstagePage(
-                tabItem: TabItem.custom,
-                child: CustomOrderScreen(
-                  onMenuPressed: _handleMenu,
-                  navigatorKey: _navigatorKeys[TabItem.custom],
-                )),
-            _buildOffstagePage(
-                tabItem: TabItem.category,
-                child: CategoryScreen(
-                  navigatorKey: _navigatorKeys[TabItem.category],
-                  handleShop: _handleShop,
-                  onFavouritesPressed: _handleFavourite,
-                  onMenuPressed: _handleMenu,
-                  onCartPressed: _handleCart,
-                )),
-            _buildOffstagePage(
-                child: DesignerScreen(
-                  onMenuPressed: _handleMenu,
-                  navigatorKey: _navigatorKeys[TabItem.designer],
-                ),
-                tabItem: TabItem.designer),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigation(
-          currentTab: _currentTab,
-          onSelectTab: _selectTab,
-        ),
-      ),
+      child: isLoading
+          ? LinearProgressIndicator()
+          : Scaffold(
+              key: _scaffoldKey,
+//              floatingActionButton:
+//                  FloatingActionButton(onPressed: () => _load(context)),
+              body: Stack(
+                children: [
+                  _buildOffstagePage(
+                      tabItem: TabItem.shop,
+                      child: ShopScreen(
+                        navigatorKey: _navigatorKeys[TabItem.shop],
+                        onMenuPressed: _handleMenu,
+                        onCartPressed: _handleCart,
+                        onFavouritesPressed: _handleFavourite,
+                      )),
+                  _buildOffstagePage(
+                      tabItem: TabItem.custom,
+                      child: CustomOrderScreen(
+                        onMenuPressed: _handleMenu,
+                        navigatorKey: _navigatorKeys[TabItem.custom],
+                      )),
+                  _buildOffstagePage(
+                      tabItem: TabItem.category,
+                      child: CategoryScreen(
+                        navigatorKey: _navigatorKeys[TabItem.category],
+                        handleShop: _handleShop,
+                        onFavouritesPressed: _handleFavourite,
+                        onMenuPressed: _handleMenu,
+                        onCartPressed: _handleCart,
+                      )),
+                  _buildOffstagePage(
+                      child: DesignerScreen(
+                        onMenuPressed: _handleMenu,
+                        navigatorKey: _navigatorKeys[TabItem.designer],
+                      ),
+                      tabItem: TabItem.designer),
+                ],
+              ),
+              bottomNavigationBar: BottomNavigation(
+                currentTab: _currentTab,
+                onSelectTab: _selectTab,
+              ),
+            ),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/text.dart';
+import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/screens/3-Category_Screen/pages/her-category.dart';
 import 'package:aashas/screens/3-Category_Screen/pages/him-category.dart';
 import 'package:aashas/screens/3-Category_Screen/pages/them-category.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
