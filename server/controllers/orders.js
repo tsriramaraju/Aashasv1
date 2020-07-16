@@ -60,25 +60,18 @@ exports.placeOrder = async (req, res, next) => {
     console.log(req.body.items);
     const selectedSize = [];
     result.cart.forEach((cart) => {
-      items.push(cart.prodId);
       selectedSize.push(cart.size);
     });
 
     req.body.userId = user._id;
     req.body.selectedSize = selectedSize;
 
-    const order = new Order({
-      selectedSize: req.body.selectedSize,
-      items: req.body.items,
-      userId: user._id,
-      note: req.body.note,
-    });
+    const order = new Order(req.body);
     const orderResult = await order.save();
     user.orders.push(order.id);
     await User.findByIdAndUpdate(user._id, { orders: user.orders });
     res.json(orderResult);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
