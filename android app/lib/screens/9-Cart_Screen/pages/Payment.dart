@@ -1,6 +1,7 @@
 import 'package:aashas/components/Button.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/models/cart-model.dart';
+import 'package:aashas/providers/CartData.dart';
 import 'package:aashas/providers/Orders.dart';
 import 'package:aashas/screens/9-Cart_Screen/components/PaymentOrderIItems.dart';
 import 'package:aashas/screens/9-Cart_Screen/pages/Success.dart';
@@ -70,37 +71,20 @@ class _PaymentPageState extends State<PaymentPage> {
     setState(() {
       paymentLoading = true;
     });
-    final orders = Provider.of<Orders>(context);
-    await orders.addOrder(
-        address: args["address"],
-        city: args["city"],
-        country: args["country"],
-        email: args["email"],
-        finalAmount: 22,
-//        (args["sum"] + 250),
-        home: args["address"],
-        items: args["items"],
-        mobile: 55625,
-//        args["mobile"],
-        note: args["note"],
-        pinCode: 2132121,
-//        args["zipCode"],
-//        shipping: 250,
-        state: "AP",
-        total: 21212
-//        args["sum"]
-        );
-    setState(() {
-      paymentLoading = false;
-    });
-
-//    print(items);
+    try {
+      await openCheckout();
+    } catch (err) {
+      setState(() {
+        isLoading = false;
+        print(err);
+      });
+    }
   }
 
-  void openCheckout() async {
+  Future<void> openCheckout() async {
     var options = {
       'key': 'rzp_test_FaEiuuoiYoG9ck',
-      'amount': args["sum"],
+      'amount': args["sum"] * 100,
       'name': 'Aasha\'s Boutique.',
       'description': 'Designer Collection',
       'prefill': {'contact': args["mobile"], 'email': args["email"]},
@@ -108,15 +92,35 @@ class _PaymentPageState extends State<PaymentPage> {
         'wallets': ['paytm']
       }
     };
-
     try {
-      _razorPay.open(options);
+      await _razorPay.open(options);
     } catch (e) {
       debugPrint(e);
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    final orders = Provider.of<Orders>(context);
+    final res = await orders.addOrder(
+        address: args["address"],
+        city: args["city"],
+        country: args["country"],
+        email: args["email"],
+        finalAmount: (args["sum"] + 250),
+        home: args["address"],
+        items: args["items"],
+        mobile: int.parse(args["mobile"]),
+        note: args["note"],
+        pinCode: int.parse(args["zipCode"]),
+        shipping: 250,
+        state: "AP",
+        total: args["sum"]);
+    isLoading = false;
+    if (!res) {
+      Navigator.pushNamed(context, FailedPage.routeName);
+      return;
+    }
+    await Provider.of<CartData>(context).deleteAll();
     Navigator.pushNamed(context, SuccessPage.routeName);
 //    Fluttertoast.showToast(
 //        msg: "SUCCESS: " + response.paymentId, timeInSecForIos: 4);

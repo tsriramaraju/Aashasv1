@@ -92,7 +92,7 @@ class Users with ChangeNotifier {
     }
   }
 
-  Future<void> generateOTP({int number}) async {
+  Future<String> generateOTP({int number}) async {
     try {
       final body = jsonEncode({"mobile": number > 100 ? number : _mobile});
       final headers = {"content-type": "application/json"};

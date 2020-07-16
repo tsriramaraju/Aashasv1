@@ -1,3 +1,5 @@
+import 'package:aashas/helpers/constants/colors.dart';
+import 'package:aashas/helpers/constants/text.dart';
 import 'package:aashas/screens/4-Shop_Screen/pages/ProductPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,15 +54,18 @@ class ProductGridTileRectangle extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+            SizedBox(
+              width: 12,
+            ),
             Expanded(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '   $title',
+                  '$title',
                   style: GoogleFonts.roboto(
-                    fontSize: height * 0.025,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -68,14 +73,11 @@ class ProductGridTileRectangle extends StatelessWidget {
                   height: height * 0.01,
                 ),
                 Text(
-                  '    \$${price.toString()}',
+                  '\$${price.toString()}',
                   style: GoogleFonts.roboto(
-                    fontSize: height * 0.020,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.04,
+                      fontSize: height * 0.020,
+                      fontWeight: FontWeight.w400,
+                      color: Color(KCSTitleColor).withOpacity(.7)),
                 ),
               ],
             ))

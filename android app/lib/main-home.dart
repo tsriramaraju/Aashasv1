@@ -13,7 +13,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class MainHome extends StatefulWidget {
+class MainHome extends KFDrawerContent {
   static const routeName = '/main-home';
   @override
   _NavigationHomeState createState() => _NavigationHomeState();
@@ -103,7 +103,7 @@ class _NavigationHomeState extends State<MainHome> {
   }
 
   void _handleMenu() {
-//    widget.onMenuPressed();
+    widget.onMenuPressed();
   }
 
   @override

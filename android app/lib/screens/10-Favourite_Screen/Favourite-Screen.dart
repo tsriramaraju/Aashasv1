@@ -111,7 +111,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                 color: e.color,
                                 img: e.img,
                                 id: e.prodId,
-                                price: e.price,
+                                price: e.price.toInt(),
                                 size: e.size,
                               ),
                             )

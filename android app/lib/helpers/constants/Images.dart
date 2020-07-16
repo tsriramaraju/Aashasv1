@@ -21,6 +21,8 @@ const String KMaleCat1Img = 'assets/images/manyavar/11.jpg';
 const String KMaleCat2Img = 'assets/images/manyavar/12.jpg';
 const String KMaleCat3Img = 'assets/images/manyavar/13.JPG';
 const String KMaleCat4Img = 'assets/images/manyavar/14.jpg';
+const String KHomeImg = 'assets/images/stock/15.jpg';
+const String KHomeImg2 = 'assets/images/manyavar/alia.jpg';
 
 //endregion
 
@@ -49,3 +51,6 @@ const String KThemCat4Img = 'assets/images/manyavar/24.jpg';
 const String LOADING = 'assets/flare/loading.flr';
 const String ROLL = 'assets/flare/roll.flr';
 const String CONTENT = 'assets/flare/content_loading.flr';
+const String TEDDY = 'assets/flare/teddy.flr';
+const String ANCIENT = 'assets/flare/ANCIENT.flr';
+const String TREE = 'assets/flare/tree.flr';

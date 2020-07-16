@@ -13,7 +13,7 @@ class Orders with ChangeNotifier {
   Orders(this.user);
   List<Order> _items = [];
 
-  Future<void> addOrder(
+  Future<bool> addOrder(
       {int mobile,
       String note,
       String email,
@@ -65,13 +65,53 @@ class Orders with ChangeNotifier {
           "totalAmount": finalAmount
         }
       });
-      print(URI);
+
       final res =
           await http.post('$URI/orders', body: (body), headers: headers);
       final result = jsonDecode(res.body);
-      print(res.body);
+
+      notifyListeners();
+      if (result["_id"].length > 0) return true;
+      return false;
+    } catch (err) {
+      print(err);
+      return false;
+    }
+  }
+
+  Future<void> fetchAndSetOrders() async {
+    try {
+      final headers = {
+        "content-type": "application/json",
+        'Authorization': 'Bearer ${user.token}'
+      };
+      final res = await http.get('$URI/orders/get', headers: headers);
+      final result = jsonDecode(res.body);
+      print(result[0]["price"]["totalAmount"]);
+      final List<Order> loadedOrders = [];
+      result.forEach((e) => {
+            loadedOrders.add(Order(
+                mobile: e["mobile"],
+                img: e["items"][0]["images"][0],
+//              items: e["items"] as List<Map<String, dynamic>>,
+//              address: e["address"] as Map<String, Map<String, String>>,
+                estDelivery: DateTime.parse(e["estDelivery"]),
+                orderedData: DateTime.parse(e["orderedDate"]),
+                status: e["status"],
+                price: e["price"]["totalAmount"]
+//              payment: e["payment"] as Map<String, Map<String, String>>,
+                ))
+          });
+      _items = loadedOrders;
+
+      print(result);
+      notifyListeners();
     } catch (err) {
       print(err);
     }
+  }
+
+  List<Order> get orders {
+    return [..._items];
   }
 }

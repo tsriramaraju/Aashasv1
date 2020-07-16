@@ -3,29 +3,24 @@ import 'package:aashas/helpers/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FavouriteItemTile extends StatelessWidget {
-  const FavouriteItemTile(
+class OrderItemTile extends StatelessWidget {
+  const OrderItemTile(
       {Key key,
       @required this.height,
       @required this.width,
-      this.color,
-      this.size,
-      this.title,
       this.img,
-      this.id,
-      this.addToCart,
-      this.price})
+      this.price,
+      this.status,
+      this.estDays})
       : super(key: key);
 
   final double height;
   final double width;
   final String img;
-  final String title;
-  final String size;
-  final String color;
-  final String id;
+
+  final String estDays;
+  final String status;
   final int price;
-  final Function addToCart;
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +48,6 @@ class FavouriteItemTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    title,
-                    style: GoogleFonts.raleway(
-                        color: Color(KOTPButtonBGColor),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  Text(
                     '\$$price',
                     style: GoogleFonts.roboto(
                         color: Color(KOTPButtonBGColor).withOpacity(0.75),
@@ -68,7 +56,7 @@ class FavouriteItemTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    'Size: $size | Color:$color',
+                    'delivering in $estDays Days',
                     style: GoogleFonts.raleway(
                         color: Color(KOTPButtonBGColor).withOpacity(0.5),
                         fontSize: 14,
@@ -78,24 +66,23 @@ class FavouriteItemTile extends StatelessWidget {
                     height: 16,
                   ),
                   GestureDetector(
-                    onTap: addToCart,
+                    onTap: null,
                     child: Container(
                       height: height * 0.045,
-                      width: width * 0.3,
+                      width: width * 0.35,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border:
-                              Border.all(color: Colors.deepPurple, width: 1.5)),
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.green, width: 1.5)),
                       alignment: Alignment.center,
                       child: Text(
-                        'Move to Bag',
+                        status,
                         style: GoogleFonts.raleway(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Colors.deepPurple),
+                            color: Colors.green),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             )

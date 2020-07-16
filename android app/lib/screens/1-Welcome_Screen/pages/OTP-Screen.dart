@@ -35,7 +35,7 @@ class _OTPScreenState extends State<OTPScreen> {
       return;
     }
     Navigator.pushNamedAndRemoveUntil(
-        context, MainHome.routeName, (route) => false);
+        context, DrawerHome.routeName, (route) => false);
   }
 
   void _handleResend(BuildContext context) async {

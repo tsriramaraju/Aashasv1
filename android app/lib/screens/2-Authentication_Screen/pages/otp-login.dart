@@ -18,6 +18,7 @@ class OTPLoginScreen extends StatefulWidget {
 class _OTPLoginScreenState extends State<OTPLoginScreen> {
   bool isLoading = false;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   void _handleSubmit(BuildContext context) async {
     final mobile = ModalRoute.of(context).settings.arguments;
     print(mobile);
@@ -34,7 +35,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
         SnackBar(content: Text(res), duration: Duration(seconds: 3)));
     if (res == "Login success")
       Navigator.pushNamedAndRemoveUntil(
-          context, MainHome.routeName, (route) => false);
+          context, DrawerHome.routeName, (route) => false);
   }
 
   void _handleResend(BuildContext context) async {

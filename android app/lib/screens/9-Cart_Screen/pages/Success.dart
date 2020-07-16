@@ -1,6 +1,9 @@
 import 'package:aashas/components/Button.dart';
 import 'package:aashas/drawerHome.dart';
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
+import 'package:aashas/main-home.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -75,8 +78,8 @@ class SuccessPage extends StatelessWidget {
             child: Align(
               child: buildButton(
                   onTap: () {
-//                    Navigator.pushNamedAndRemoveUntil(
-//                        context, DrawerHome.routeName, (route) => false);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, DrawerHome.routeName, (route) => false);
                   },
                   width: width * 0.7,
                   text: 'Continue Shopping',
@@ -88,18 +91,16 @@ class SuccessPage extends StatelessWidget {
             children: [
               Align(
                 child: Container(
-                  height: height * 0.45,
-                  width: width * 0.5,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey[100],
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.gift,
-                    size: height * 0.12,
-                    color: Color(KOTPButtonBGColor),
-                  ),
-                ),
+                    height: height * 0.45,
+                    width: width * 0.5,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[100],
+                    ),
+                    child: FlareActor(
+                      TEDDY,
+                      animation: "success",
+                    )),
               ),
               Text(
                 "Congrats!",
