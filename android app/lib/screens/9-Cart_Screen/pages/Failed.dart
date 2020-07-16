@@ -1,9 +1,14 @@
 import 'package:aashas/components/Button.dart';
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
+import 'package:aashas/main-home.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../drawerHome.dart';
 
 class FailedPage extends StatelessWidget {
   static const routeName = '/failed-page';
@@ -73,6 +78,8 @@ class FailedPage extends StatelessWidget {
             color: Colors.white,
             child: Align(
               child: buildButton(
+                  onTap: () => Navigator.pushReplacementNamed(
+                      context, DrawerHome.routeName),
                   width: width * 0.7,
                   text: 'Continue Shopping',
                   bgColor: KOTPButtonBGColor,
@@ -89,10 +96,9 @@ class FailedPage extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.grey[100],
                   ),
-                  child: Icon(
-                    FontAwesomeIcons.times,
-                    size: height * 0.12,
-                    color: Color(KOTPButtonBGColor),
+                  child: FlareActor(
+                    TEDDY,
+                    animation: "fail",
                   ),
                 ),
               ),

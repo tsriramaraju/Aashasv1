@@ -58,8 +58,9 @@ class _AllProductsState extends State<AllProducts> {
 
   Future<void> loadItems() async {
     final prods = Provider.of<Products>(context);
-//    await prods.fetAndSetProducts();
+
     items = prods.filterProducts(widget.filter, subFilter: widget.subFilter);
+    if (items == []) await prods.fetAndSetProducts();
     setState(() {
       itemsCount = items.length;
       isLoading = false;

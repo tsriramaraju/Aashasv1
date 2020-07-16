@@ -69,7 +69,7 @@ class ShopOfferBanner extends StatelessWidget {
 //              autoPlayCurve: Curves.fastOutSlowIn,
                 enlargeCenterPage: false,
                 scrollDirection: Axis.horizontal,
-                height: 150
+                height: 170
 //                  widget.height * .235,
                 ),
           )

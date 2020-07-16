@@ -96,8 +96,8 @@ class _ShopPageState extends State<ShopPage> {
               ? Container(
                   width: widget.width * .8,
                   child: FlareActor(
-                    LOADING,
-                    animation: 'Loading',
+                    ANCIENT,
+                    animation: 'Untitled',
                   ),
                 )
               : ListView(

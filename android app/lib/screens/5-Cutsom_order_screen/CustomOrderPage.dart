@@ -1,5 +1,13 @@
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
+import 'package:aashas/models/order-model.dart';
+import 'package:aashas/providers/Orders.dart';
+import 'package:aashas/screens/10-Favourite_Screen/components/FavouriteITemTIle.dart';
+import 'package:aashas/screens/5-Cutsom_order_screen/components/ORdersTile.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CustomOrderPage extends StatefulWidget {
   final Function onMenuPressed;
@@ -9,27 +17,43 @@ class CustomOrderPage extends StatefulWidget {
 }
 
 class _CustomOrderPageState extends State<CustomOrderPage> {
-//  VideoPlayerController _controller;
-//  Future<void> _initializeVideoPlayerFuture;
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    print('init called');
-//    _controller = VideoPlayerController.asset('assets/videos/1.mp4');
-//    _initializeVideoPlayerFuture = _controller.initialize();
-//  }
-//
-//  @override
-//  void dispose() {
-//    // TODO: implement dispose
-//    super.dispose();
-//    _controller.dispose();
-//    print('dispose called');
-//  }
+  bool isLoading = false;
+  var _isInit = true;
+  var _productsData;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      setState(() {
+        isLoading = true;
+      });
+      print("Custom Orders init state");
+      await loadItems();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  List<Order> orders = [];
+  Future<void> loadItems() async {
+    final ords = Provider.of<Orders>(context);
+
+    await ords.fetchAndSetOrders();
+    orders = ords.orders;
+    setState(() {
+      isLoading = false;
+    });
+    print(orders);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -40,43 +64,89 @@ class _CustomOrderPageState extends State<CustomOrderPage> {
         backgroundColor: Color(KWSBGColor),
         brightness: Brightness.light,
         elevation: 0,
+        title: Text(
+          "My Orders",
+          style: GoogleFonts.roboto(color: Color(KWSTitleColor)),
+        ),
       ),
-      body: Center(
-        child: Text('Custom Order'),
-      ),
-//      body: FutureBuilder(
-//        future: _initializeVideoPlayerFuture,
-//        builder: (context, snapshot) {
-//          if (snapshot.connectionState == ConnectionState.done) {
-//            // If the VideoPlayerController has finished initialization, use
-//            // the data it provides to limit the aspect ratio of the video.
-//            return VideoPlayer(_controller);
-//          } else {
-//            // If the VideoPlayerController is still initializing, show a
-//            // loading spinner.
-//            return Center(child: CircularProgressIndicator());
-//          }
-//        },
-//      ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () {
-//          // Wrap the play or pause in a call to `setState`. This ensures the
-//          // correct icon is shown.
-//          setState(() {
-//            // If the video is playing, pause it.
-//            if (_controller.value.isPlaying) {
-//              _controller.pause();
-//            } else {
-//              // If the video is paused, play it.
-//              _controller.play();
-//            }
-//          });
-//        },
-//        // Display the correct icon depending on the state of the player.
-//        child: Icon(
-//          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-//        ),
-//      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: isLoading
+          ? Container(
+              height: height * 0.8,
+              child: FlareActor(
+                LOADING,
+                animation: "Loading",
+              ),
+            )
+          : orders.length > 0
+              ? Container(
+                  width: double.infinity,
+//            color: Colors.grey,
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Wish List',
+                        style: GoogleFonts.roboto(
+                            color: Color(KOTPButtonBGColor),
+                            fontSize: 21,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        '${orders.length} orders found',
+                        style: GoogleFonts.roboto(
+                            color: Color(KOTPButtonBGColor).withOpacity(0.5),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      isLoading
+                          ? Container(
+                              height: height * 0.5,
+                              child: FlareActor(
+                                LOADING,
+                                animation: "Loading",
+                              ),
+                            )
+                          : Container(
+                              height: height * 0.70,
+                              child: ListView(
+                                physics: BouncingScrollPhysics(),
+                                children: [
+                                  ...orders.map(
+                                    (e) => OrderItemTile(
+                                      height: height,
+                                      width: width,
+                                      estDays: (e.estDelivery
+                                              .difference(DateTime.now())
+                                              .inDays)
+                                          .toString(),
+                                      status: e.status,
+                                      img: e.img,
+                                      price: e.price,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                    ],
+                  ),
+                )
+              : Column(
+                  children: [
+                    Container(
+                      height: height * 0.7,
+                      child: FlareActor(TREE, animation: "Swing"),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      child: Text("No, Orders yet. Please Add some",
+                          style: GoogleFonts.roboto(fontSize: 18)),
+                    )
+                  ],
+                ),
     );
   }
 }

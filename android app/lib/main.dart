@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         routes: {
           Home.routeName: (context) => Home(),
           MainHome.routeName: (context) => MainHome(),
-//          DrawerHome.routeName: (context) => DrawerHome(),
+          DrawerHome.routeName: (context) => DrawerHome(),
           WelcomeScreen.routeName: (context) => WelcomeScreen(),
           RegisterScreen.routeName: (context) => RegisterScreen(),
           MobileRegistrationScreen.routeName: (context) =>

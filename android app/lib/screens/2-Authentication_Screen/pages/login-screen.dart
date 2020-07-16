@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         SnackBar(content: Text(res), duration: Duration(seconds: 3)));
     if (res == "Login success")
       Navigator.pushNamedAndRemoveUntil(
-          context, MainHome.routeName, (route) => false);
+          context, DrawerHome.routeName, (route) => false);
   }
 
   void _handleMobileLogin(BuildContext context) {

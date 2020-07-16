@@ -24,7 +24,7 @@ class FavouriteItemTile extends StatelessWidget {
   final String size;
   final String color;
   final String id;
-  final double price;
+  final int price;
   final Function addToCart;
 
   @override
