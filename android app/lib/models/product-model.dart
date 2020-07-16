@@ -19,15 +19,20 @@ class Product with ChangeNotifier {
       this.size,
       this.images,
       this.category,
-      this.isFavourite,
+      this.isFavourite = false,
       this.name,
       this.isNew = false,
       this.price,
       this.designerCollection = false,
       this.trends = false});
 
-  void toggleFavoriteStatus() {
-    isFavourite = !isFavourite;
-    notifyListeners();
-  }
+//  void toggleFavoriteStatus() {
+//    isFavourite = !isFavourite;
+//    print(isFavourite);
+//    notifyListeners();
+//  }
+//
+//  bool get favourite {
+//    return isFavourite;
+//  }
 }

@@ -68,7 +68,8 @@ class CartData with ChangeNotifier {
             size: element["size"],
             id: element["_id"],
             img: element["prodId"]["images"][0],
-            qty: 2));
+            color: element["prodId"]["color"][0],
+            qty: 1));
       });
       _items = loadedItems;
 

@@ -1,5 +1,6 @@
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/models/salesBanner.dart';
+import 'package:aashas/providers/Favourites.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/providers/salesBanner.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/AllProductsBlock.dart';
@@ -56,11 +57,13 @@ class _ShopPageState extends State<ShopPage> {
     super.didChangeDependencies();
   }
 
-  List<SalesBanner> banners;
+  List<SalesBanner> banners = [];
   Future<void> loadItems() async {
     final prods = Provider.of<Products>(context);
     final bnrs = Provider.of<SalesBanners>(context);
     await prods.fetAndSetProducts();
+    final favs = Provider.of<Favourites>(context);
+    await favs.fetchAndSetFavourites();
     await bnrs.fetchAndSetBanners();
     banners = bnrs.banner;
     _productsData = prods;

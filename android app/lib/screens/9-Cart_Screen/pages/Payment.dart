@@ -1,5 +1,7 @@
 import 'package:aashas/components/Button.dart';
 import 'package:aashas/helpers/constants/colors.dart';
+import 'package:aashas/models/cart-model.dart';
+import 'package:aashas/providers/Orders.dart';
 import 'package:aashas/screens/9-Cart_Screen/components/PaymentOrderIItems.dart';
 import 'package:aashas/screens/9-Cart_Screen/pages/Success.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import 'Failed.dart';
@@ -21,7 +24,8 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
 //  static const platform = const MethodChannel("razorpay_flutter");
   Razorpay _razorPay;
-
+  bool isLoading = false;
+  var _isInit = true;
   @override
   void initState() {
     super.initState();
@@ -32,18 +36,74 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      setState(() {
+        isLoading = true;
+      });
+      print("Payment Page init state");
+      await loadItem();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  var args;
+  int cartCount = 0;
+  Future<void> loadItem() async {
+    args = ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    items = args["items"];
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _razorPay.clear();
   }
 
+  List<Cart> items = [];
+  bool paymentLoading = false;
+  void _handleCheckout() async {
+    setState(() {
+      paymentLoading = true;
+    });
+    final orders = Provider.of<Orders>(context);
+    await orders.addOrder(
+        address: args["address"],
+        city: args["city"],
+        country: args["country"],
+        email: args["email"],
+        finalAmount: 22,
+//        (args["sum"] + 250),
+        home: args["address"],
+        items: args["items"],
+        mobile: 55625,
+//        args["mobile"],
+        note: args["note"],
+        pinCode: 2132121,
+//        args["zipCode"],
+//        shipping: 250,
+        state: "AP",
+        total: 21212
+//        args["sum"]
+        );
+    setState(() {
+      paymentLoading = false;
+    });
+
+//    print(items);
+  }
+
   void openCheckout() async {
     var options = {
       'key': 'rzp_test_FaEiuuoiYoG9ck',
-      'amount': 599,
-      'name': 'Asha\'s Boutique.',
+      'amount': args["sum"],
+      'name': 'Aasha\'s Boutique.',
       'description': 'Designer Collection',
-      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'prefill': {'contact': args["mobile"], 'email': args["email"]},
       'external': {
         'wallets': ['paytm']
       }
@@ -174,42 +234,16 @@ class _PaymentPageState extends State<PaymentPage> {
                 child: ListView(
                   physics: BouncingScrollPhysics(),
                   children: [
-                    PaymentOrderItemsCard(height: height, width: width),
-                    Divider(
-                      height: 20,
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
-                    PaymentOrderItemsCard(height: height, width: width),
-                    Divider(
-                      height: 20,
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
-                    PaymentOrderItemsCard(height: height, width: width),
-                    Divider(
-                      height: 20,
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
-                    PaymentOrderItemsCard(height: height, width: width),
-                    Divider(
-                      height: 20,
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
-                    PaymentOrderItemsCard(height: height, width: width),
-                    Divider(
-                      height: 20,
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
-                    PaymentOrderItemsCard(height: height, width: width),
-                    Divider(
-                      height: 20,
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
+                    ...items.map(
+                      (e) => PaymentOrderItemsCard(
+                          height: height,
+                          width: width,
+                          color: e.color,
+                          size: e.size,
+                          price: e.price,
+                          img: e.img,
+                          title: e.title),
+                    )
                   ],
                 ),
               )
@@ -233,7 +267,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         fontSize: 18),
                   ),
                   Text(
-                    "\$498",
+                    "\$${args["sum"]}",
                     style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w400,
                         color: Color(KOTPButtonBGColor).withOpacity(0.9),
@@ -314,7 +348,8 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               Align(
                 child: buildButton(
-                    onTap: openCheckout,
+                    onTap: _handleCheckout,
+                    loading: paymentLoading,
                     width: width * 0.45,
                     text: 'Pay',
                     bgColor: KOTPButtonBGColor,

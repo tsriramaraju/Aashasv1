@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:aashas/helpers/constants/variables.dart';
 import 'package:aashas/models/Favourites-model.dart';
+import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/Users.dart';
 import 'package:http/http.dart' as http;
 import 'package:aashas/helpers/constants/Images.dart';
@@ -12,6 +13,7 @@ import '';
 class Favourites with ChangeNotifier {
   final Users user;
   Favourites(this.user);
+
   List<Favourite> _items = [
 //    Cart(
 //        price: 90,
@@ -44,7 +46,10 @@ class Favourites with ChangeNotifier {
           await http.post('$URI/favourites', body: body, headers: headers);
       final result = jsonDecode(res.body);
       print(result);
-      if (result[0]["sucess"] == "sucess") return result["msg"];
+      await fetchAndSetFavourites();
+      if (result["msg"] == "Favourite  removed") return "Favourite  removed";
+      if (result["msg"] == "Favourites added suceffully")
+        return "Favourites added suceffully";
 
       notifyListeners();
       return "Failed";
@@ -66,6 +71,7 @@ class Favourites with ChangeNotifier {
         loadedItems.add(Favourite(
             title: element["prodId"]["title"],
             price: element["prodId"]["price"],
+            prodId: element["prodId"]["_id"],
             size: "XL",
             id: element["_id"],
             img: element["prodId"]["images"][0],
@@ -77,5 +83,18 @@ class Favourites with ChangeNotifier {
     } catch (err) {
       print(err);
     }
+  }
+
+  bool isFav(String id) {
+    bool val = false;
+    if (_items == []) return val;
+    _items.forEach((element) {
+      if (id == element.prodId) val = true;
+    });
+    return val;
+  }
+
+  int favCount() {
+    return _items.length;
   }
 }

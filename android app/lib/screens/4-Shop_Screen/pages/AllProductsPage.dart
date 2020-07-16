@@ -40,6 +40,7 @@ class _AllProductsState extends State<AllProducts> {
     super.initState();
   }
 
+  int itemsCount = 0;
   @override
   void didChangeDependencies() async {
     if (_isInit) {
@@ -57,9 +58,10 @@ class _AllProductsState extends State<AllProducts> {
 
   Future<void> loadItems() async {
     final prods = Provider.of<Products>(context);
-    await prods.fetAndSetProducts();
+//    await prods.fetAndSetProducts();
     items = prods.filterProducts(widget.filter, subFilter: widget.subFilter);
     setState(() {
+      itemsCount = items.length;
       isLoading = false;
     });
   }
@@ -69,6 +71,7 @@ class _AllProductsState extends State<AllProducts> {
       filter = index;
       final prods = Provider.of<Products>(context);
       items = prods.filterProducts(index);
+      itemsCount = items.length;
     });
   }
 
@@ -128,7 +131,7 @@ class _AllProductsState extends State<AllProducts> {
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      '7743 items found',
+                      '$itemsCount items found',
                       style: GoogleFonts.roboto(
                           color: Color(KOTPButtonBGColor).withOpacity(0.5),
                           fontSize: height * 0.0175,

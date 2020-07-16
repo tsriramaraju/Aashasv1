@@ -45,17 +45,21 @@ class _CartScreenState extends State<CartScreen> {
     super.didChangeDependencies();
   }
 
+  int cartCount = 0;
   Future<void> loadItem() async {
     final cart = Provider.of<CartData>(context);
     await cart.fetchAndSetCart();
+    sum = cart.totalAmount;
     items = cart.items;
     setState(() {
+      cartCount = items.length;
       isLoading = false;
     });
   }
 
   void _handleCheckout() {
-    Navigator.pushNamed(context, ShippingPage.routeName);
+    Navigator.pushNamed(context, ShippingPage.routeName,
+        arguments: {"items": items, "sum": sum});
   }
 
   bool delLoading = false;
@@ -71,7 +75,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    sum = 123;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark.copyWith();
@@ -103,7 +106,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         body: isLoading
             ? Container(
-                width: width * .5,
+                width: height * 0.76,
                 child: FlareActor(
                   ROLL,
                   animation: 'roll',
@@ -129,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                               },
                             ),
                             Text(
-                              'Select all products (5)',
+                              'Select all products ($cartCount)',
                               style: GoogleFonts.raleway(
                                   color:
                                       Color(KOTPButtonBGColor).withOpacity(0.6),

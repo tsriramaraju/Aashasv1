@@ -174,7 +174,7 @@ class Products with ChangeNotifier {
 //      print(loadedProducts[0].category);
       _products = loadedProducts;
       _products.forEach((element) {
-        print(element.images);
+        print("products fetched");
       });
       notifyListeners();
     } catch (err) {

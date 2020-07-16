@@ -3,6 +3,7 @@ import 'package:aashas/main-home.dart';
 
 import 'package:aashas/providers/CartData.dart';
 import 'package:aashas/providers/Favourites.dart';
+import 'package:aashas/providers/Orders.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/providers/Users.dart';
 import 'package:aashas/providers/desginer.dart';
@@ -25,6 +26,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'helpers/utils/Class_Builders.dart';
+import 'models/product-model.dart';
 
 void main() {
   ClassBuilder.registerClasses();
@@ -43,12 +45,16 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: Users()),
         ChangeNotifierProvider.value(value: Products()),
+        ChangeNotifierProvider.value(value: Product()),
         ChangeNotifierProvider.value(value: Designer()),
         ChangeNotifierProxyProvider<Users, CartData>(
           builder: (ctx, data, prevData) => CartData(data),
         ),
         ChangeNotifierProxyProvider<Users, Favourites>(
           builder: (ctx, data, prevData) => Favourites(data),
+        ),
+        ChangeNotifierProxyProvider<Users, Orders>(
+          builder: (ctx, data, prevData) => Orders(data),
         ),
 //        ChangeNotifierProvider.value(value: CartData()),
         ChangeNotifierProvider.value(value: SalesBanners()),

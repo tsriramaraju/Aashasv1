@@ -3,6 +3,7 @@ import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'ProductGridItemSquare.dart';
 
@@ -65,17 +66,20 @@ class DesignerCollectionBlock extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             children: [
               ...items.map((index) {
-                return ProductGridTileSquare(
-                  onCartPressed: onCartPressed,
-                  onFavouritePressed: onFavouritePressed,
-                  height: height,
-                  id: index.id,
-                  width: width,
-                  title: index.name,
-                  img: index.images[0],
-                  isNew: index.isNew,
-                  isFavourite: index.isFavourite,
-                  price: index.price,
+                return ChangeNotifierProvider.value(
+                  value: index,
+                  child: ProductGridTileSquare(
+                    onCartPressed: onCartPressed,
+                    onFavouritePressed: onFavouritePressed,
+                    height: height,
+                    id: index.id,
+                    width: width,
+                    title: index.name,
+                    img: index.images[0],
+                    isNew: index.isNew,
+                    isFavourite: index.isFavourite,
+                    price: index.price,
+                  ),
                 );
               }).toList()
             ],

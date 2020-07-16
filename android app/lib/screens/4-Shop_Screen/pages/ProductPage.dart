@@ -3,6 +3,7 @@ import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/CartData.dart';
+import 'package:aashas/providers/Favourites.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/screens/4-Shop_Screen/components/ProductCards.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -58,6 +59,9 @@ class _ProductPageState extends State<ProductPage> {
   Future<void> loadItem() async {
     final prods = Provider.of<Products>(context);
     await prods.fetAndSetProducts();
+    final favs = Provider.of<Favourites>(context);
+//    await favs.fetchAndSetFavourites();
+//    prods.products.map((e) => print(e.name));
     item = prods.products.firstWhere((element) => element.id == widget.id);
     setState(() {
       isLoading = false;

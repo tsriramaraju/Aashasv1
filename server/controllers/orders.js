@@ -57,7 +57,7 @@ exports.placeOrder = async (req, res, next) => {
           model: 'product',
         },
       });
-
+    console.log(req.body.items);
     const selectedSize = [];
     result.cart.forEach((cart) => {
       items.push(cart.prodId);

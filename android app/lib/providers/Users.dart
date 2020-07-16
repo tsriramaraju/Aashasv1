@@ -123,7 +123,8 @@ class Users with ChangeNotifier {
       final resData = jsonDecode(result.body);
       print(resData);
       if (!(resData is List)) {
-        _token = resData["token"];
+        setToken(resData["token"]);
+        print(_token);
         await loadUser();
         return resData["msg"];
       }
@@ -147,7 +148,7 @@ class Users with ChangeNotifier {
       final resData = jsonDecode(result.body);
       print(resData);
       if (!(resData is List)) {
-        _token = resData["token"];
+        setToken(resData["token"]);
         await loadUser();
         return resData["msg"];
       }
@@ -173,6 +174,10 @@ class Users with ChangeNotifier {
       _email = resData["email"];
       _name = resData["name"];
       _mobile = resData["mobile"];
+      print("user Loaded");
+      print("user $_name");
+      print("user $_email");
+      print("user $_mobile");
     } catch (err) {
       print(err);
     }

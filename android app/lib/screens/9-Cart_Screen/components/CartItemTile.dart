@@ -1,6 +1,7 @@
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/providers/CartData.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,7 +75,13 @@ class _CartItemTileState extends State<CartItemTile> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: itemLoading
-                    ? CircularProgressIndicator()
+                    ? Container(
+                        width: widget.width * 0.3,
+                        child: FlareActor(
+                          LOADING,
+                          animation: "Error",
+                        ),
+                      )
                     : Image.network(
                         widget.img,
                         width: widget.width * 0.3,
