@@ -67,7 +67,12 @@ exports.placeOrder = async (req, res, next) => {
     req.body.userId = user._id;
     req.body.selectedSize = selectedSize;
 
-    const order = new Order(req.body);
+    const order = new Order({
+      selectedSize: req.body.selectedSize,
+      items: req.body.items,
+      userId: user._id,
+      note: req.body.note,
+    });
     const orderResult = await order.save();
     user.orders.push(order.id);
     await User.findByIdAndUpdate(user._id, { orders: user.orders });

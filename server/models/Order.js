@@ -9,7 +9,7 @@ const OrderSchema = new mongoose.Schema({
   mobile: Number,
   items: [
     {
-      title: { type: String, unique: true },
+      title: { type: String },
       description: { type: String },
       size: [{ type: String }],
       price: { type: Number },
