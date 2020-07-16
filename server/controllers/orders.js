@@ -58,14 +58,12 @@ exports.placeOrder = async (req, res, next) => {
         },
       });
 
-    const items = [];
     const selectedSize = [];
     result.cart.forEach((cart) => {
       items.push(cart.prodId);
       selectedSize.push(cart.size);
     });
 
-    req.body.items = items;
     req.body.userId = user._id;
     req.body.selectedSize = selectedSize;
 
