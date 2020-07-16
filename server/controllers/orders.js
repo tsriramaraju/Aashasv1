@@ -73,6 +73,7 @@ exports.placeOrder = async (req, res, next) => {
     await User.findByIdAndUpdate(user._id, { orders: user.orders });
     res.json(orderResult);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };

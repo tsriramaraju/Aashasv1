@@ -63,12 +63,13 @@ class Orders with ChangeNotifier {
           "tax": "18",
           "shippingCharges": shipping,
           "totalAmount": finalAmount
-        },
+        }
       });
-
-      final res = await http.post('$URI/orders', body: body, headers: headers);
+      print(URI);
+      final res =
+          await http.post('$URI/orders', body: (body), headers: headers);
       final result = jsonDecode(res.body);
-      print(result);
+      print(res.body);
     } catch (err) {
       print(err);
     }
