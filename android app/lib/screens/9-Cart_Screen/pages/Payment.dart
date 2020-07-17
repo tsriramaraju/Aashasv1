@@ -73,22 +73,6 @@ class _PaymentPageState extends State<PaymentPage> {
     });
     try {
       await openCheckout();
-//      final orders = Provider.of<Orders>(context);
-//      print(args);
-//      final res = await orders.addOrder(
-//          address: args["address"],
-//          city: args["city"],
-//          country: args["country"],
-//          email: args["email"],
-//          finalAmount: args["sum"],
-//          home: args["address"],
-//          items: args["items"],
-//          mobile: int.parse(args["mobile"]),
-//          note: args["note"],
-//          pinCode: int.parse(args["zipCode"]),
-//          shipping: 250,
-//          state: "AP",
-//          total: args["sum"]);
     } catch (err) {
       setState(() {
         isLoading = false;
