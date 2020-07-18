@@ -4,6 +4,7 @@ import 'package:admin/helpers/Button.dart';
 import 'package:admin/helpers/colors.dart';
 import 'package:admin/models/product-model.dart';
 import 'package:admin/providers/Products_Provider.dart';
+import 'package:admin/screens/Success.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _colorsFocusNode = FocusNode();
   final _mainCatFocusNode = FocusNode();
   final _subCatFocusNode = FocusNode();
-  final _discountFocusNode = FocusNode();
+
   final _descriptionFocusNode = FocusNode();
   List<Asset> images = List<Asset>();
   final _form = GlobalKey<FormState>();
@@ -65,7 +66,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _colorsFocusNode.dispose();
     _mainCatFocusNode.dispose();
     _subCatFocusNode.dispose();
-    _discountFocusNode.dispose();
+
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
 
@@ -105,6 +106,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
@@ -135,13 +137,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
       _uploadedFileURLS.forEach((e) => print("final results $e"));
 
       final products = Provider.of<Products>(context);
-      await products.addProduct(_addedProduct);
+      final result = await products.addProduct(_addedProduct);
+      if (result == "Product suceffuly added") {
+        _scaffoldKey.currentState.showSnackBar(
+            SnackBar(content: Text(result), duration: Duration(seconds: 3)));
+        Navigator.pushReplacementNamed(context, SuccessPage.routeName);
+      }
       setState(() {
         _isLoading = false;
       });
-
-//        await Provider.of<Products>(context, listen: false)
-//            .addProduct(_editedProduct);
     } catch (error) {
       await showDialog(
         context: context,
@@ -158,7 +162,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           ],
         ),
       );
-      print(error);
+      print("error is $error");
     }
 
     setState(() {
@@ -231,6 +235,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(KDrawerBGColor),
         title: Text('Add Product'),
@@ -290,6 +295,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         }
                         if (double.tryParse(value) == null) {
                           return 'Please enter a valid number.';
+                        }
+                        if ((double.tryParse(value) % 1) == 0) {
+                          return 'Please enter a decimal point';
                         }
                         if (double.parse(value) <= 0) {
                           return 'Please enter a number greater than zero.';
@@ -569,7 +577,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       textInputAction: TextInputAction.done,
                       focusNode: _subCatFocusNode,
                       onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_discountFocusNode);
+                        FocusScope.of(context).unfocus();
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -589,47 +597,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             category: {cat: sub},
                             isNew: isNew,
                             trends: trending,
-                            designerCollection: designerCollection);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 150,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Discount % (opt)',
-                        contentPadding: EdgeInsets.symmetric(vertical: 25),
-                      ),
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.number,
-                      focusNode: _discountFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).unfocus();
-                      },
-                      validator: (value) {
-                        if (double.tryParse(value) == null) {
-                          return 'Please enter a valid number.';
-                        }
-                        if (double.parse(value) <= 0) {
-                          return 'Please enter a number greater than zero.';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _addedProduct = Product(
-                            name: _addedProduct.name,
-                            price: _addedProduct.price,
-                            description: _addedProduct.description,
-                            size: _addedProduct.size,
-                            colors: _addedProduct.colors,
-                            category: _addedProduct.category,
-                            isNew: isNew,
-                            trends: trending,
-                            discount: double.parse(value),
                             designerCollection: designerCollection);
                       },
                     ),

@@ -22,7 +22,7 @@ class Products with ChangeNotifier {
       "title": productData.name,
       "description": productData.description,
       "size": productData.size.join(" "),
-      "price": productData.price,
+      "price": productData.price + 0.00,
       "color": productData.colors.join(" "),
       "category": productData.category.keys.first,
       "sub": productData.category[productData.category.keys.first].join(" "),
@@ -34,10 +34,12 @@ class Products with ChangeNotifier {
     try {
       final res =
           await http.post('$URI/products', body: body, headers: headers);
-      final result = jsonDecode(res.body) as List<dynamic>;
+      final result = jsonDecode(res.body);
       print(result);
+      return result["msg"];
     } catch (err) {
-      print(err);
+      print("error from provide $err");
+      return err["msg"];
     }
   }
 

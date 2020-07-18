@@ -1,6 +1,7 @@
 import 'package:admin/dashboard.dart';
 import 'package:admin/providers/Products_Provider.dart';
 import 'package:admin/providers/Users.dart';
+import 'package:admin/screens/Success.dart';
 import 'package:admin/screens/addProducts.dart';
 import 'package:admin/screens/loginScreen.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         routes: {
           LoginScreen.routeName: (context) => LoginScreen(),
           Dashboard.routeName: (context) => Dashboard(),
+          SuccessPage.routeName: (context) => SuccessPage(),
           AddProductScreen.routeName: (context) => AddProductScreen()
         },
       ),
