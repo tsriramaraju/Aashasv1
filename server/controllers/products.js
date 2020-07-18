@@ -47,12 +47,10 @@ exports.createProduct = async (req, res, next) => {
 
     await product.save();
 
-    res.json([
-      {
-        success: true,
-        msg: 'Product suceffuly added',
-      },
-    ]);
+    res.json({
+      success: true,
+      msg: 'Product suceffuly added',
+    });
   } catch (err) {
     next(err);
   }

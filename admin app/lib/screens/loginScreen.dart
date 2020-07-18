@@ -58,7 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
           : passwordVal = false;
     });
 
-    if (emailVal && passwordVal) _handleSignIn(context);
+//    if (emailVal && passwordVal)
+    _handleSignIn(context);
   }
 
   void _handleSignIn(BuildContext context) async {

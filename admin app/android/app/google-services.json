@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1020131069196",
+    "firebase_url": "https://aashas-c2e87.firebaseio.com",
+    "project_id": "aashas-c2e87",
+    "storage_bucket": "aashas-c2e87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020131069196:android:488a080f94430ea30fcd29",
+        "android_client_info": {
+          "package_name": "com.example.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020131069196-uej3dbvc4rvgb9h5bbd6grv3o10f8g7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIOnn1utHkfvSrcdFeIqB4ryX63_W0CO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020131069196-uej3dbvc4rvgb9h5bbd6grv3o10f8g7h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
