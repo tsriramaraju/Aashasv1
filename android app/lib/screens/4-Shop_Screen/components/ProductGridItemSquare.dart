@@ -2,6 +2,7 @@ import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/Favourites.dart';
 import 'package:aashas/screens/4-Shop_Screen/pages/ProductPage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,9 +113,14 @@ class _ProductGridTileSquareState extends State<ProductGridTileSquare> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.network(
-                            widget.img,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.img,
                             fit: BoxFit.cover,
+                            placeholder: (context, url) => Flexible(
+                                child: FlareActor(
+                              LOADING,
+                              animation: "Loading",
+                            )),
                           ),
                         ),
                         Positioned(

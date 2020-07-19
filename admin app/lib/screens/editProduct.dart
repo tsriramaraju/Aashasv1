@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:admin/helpers/Button.dart';
+import 'package:admin/helpers/Images.dart';
 import 'package:admin/helpers/colors.dart';
 import 'package:admin/models/product-model.dart';
 import 'package:admin/providers/Products_Provider.dart';
 import 'package:admin/screens/Success.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
@@ -231,8 +233,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 FlatButton(
                   child: Text('Okay'),
                   onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
                     final products = Provider.of<Products>(context);
                     final result = await products.deleteProduct(id);
+                    setState(() {
+                      isLoading = false;
+                    });
                     Navigator.of(ctx).pushNamed(DeletedPage.routeName);
                   },
                 )
@@ -313,14 +321,24 @@ class _EditProductScreenState extends State<EditProductScreen> {
         backgroundColor: Color(KDrawerBGColor),
         title: Text('Edit Product'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: _saveForm,
-          ),
-          IconButton(
-            icon: Icon(Icons.delete_forever),
-            onPressed: handleDelete,
-          )
+          isLoading
+              ? Container(
+                  width: 100,
+                  child: FlareActor(
+                    LOADING,
+                    animation: "Loading",
+                  ),
+                )
+              : IconButton(
+                  icon: Icon(Icons.save),
+                  onPressed: _saveForm,
+                ),
+          isLoading
+              ? Text('')
+              : IconButton(
+                  icon: Icon(Icons.delete_forever),
+                  onPressed: handleDelete,
+                )
         ],
       ),
       body: isLoading

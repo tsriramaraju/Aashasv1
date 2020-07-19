@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:admin/dashboard.dart';
 import 'package:admin/helpers/Button.dart';
+import 'package:admin/helpers/Images.dart';
 import 'package:admin/helpers/colors.dart';
 import 'package:admin/models/product-model.dart';
 import 'package:admin/providers/Products_Provider.dart';
 import 'package:admin/screens/Success.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
@@ -240,10 +243,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
         backgroundColor: Color(KDrawerBGColor),
         title: Text('Add Product'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: _saveForm,
-          ),
+          _isLoading
+              ? Container(
+                  width: 50,
+                  child: FlareActor(
+                    LOADING,
+                    animation: 'Loading',
+                  ),
+                )
+              : IconButton(
+                  icon: Icon(Icons.save),
+                  onPressed: _saveForm,
+                ),
         ],
       ),
       body: Padding(

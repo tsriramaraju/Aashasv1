@@ -1,7 +1,9 @@
+import 'package:admin/helpers/Images.dart';
 import 'package:admin/helpers/colors.dart';
 import 'package:admin/models/product-model.dart';
 import 'package:admin/providers/Products_Provider.dart';
 import 'package:admin/screens/ProductPage.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +57,14 @@ class _ManageProductsState extends State<ManageProducts> {
         title: Text('Manage Products'),
       ),
       body: isLoading
-          ? CircularProgressIndicator()
+          ? Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: FlareActor(
+                LOADING,
+                animation: "Loading",
+              ),
+            )
           : ListView(
               padding: EdgeInsets.all(15),
               physics: BouncingScrollPhysics(),

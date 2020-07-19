@@ -39,10 +39,17 @@ dependencies:
   razorpay_flutter: ^1.2.1
   fluttertoast: ^6.0.1
   provider: 3.0.0
+  cached_network_image: ^2.2.0+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.5
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

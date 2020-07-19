@@ -52,7 +52,7 @@ class AllProductsBlock extends StatelessWidget {
           ),
         ),
         Container(
-          height: height * 0.60,
+          height: height * 0.65,
           child: GridView(
             padding: EdgeInsets.all(10),
             scrollDirection: Axis.vertical,

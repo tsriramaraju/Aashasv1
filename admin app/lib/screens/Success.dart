@@ -43,8 +43,8 @@ class SuccessPage extends StatelessWidget {
             child: Align(
               child: buildButton(
                   onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, Dashboard.routeName);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, Dashboard.routeName, (route) => false);
                   },
                   width: width * 0.7,
                   text: 'Continue',

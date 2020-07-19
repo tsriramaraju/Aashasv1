@@ -106,7 +106,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         body: isLoading
             ? Container(
-                width: height * 0.76,
+                width: height * 0.90,
                 child: FlareActor(
                   ROLL,
                   animation: 'roll',
