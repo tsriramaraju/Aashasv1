@@ -38,12 +38,16 @@ class DesignerTitleCard extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                name,
-                style: GoogleFonts.roboto(
-                    color: Color(KOTPButtonBGColor),
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600),
+              Container(
+                width: 165,
+                child: Text(
+                  name,
+//                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.roboto(
+                      color: Color(KOTPButtonBGColor),
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600),
+                ),
               ),
               Row(
                 children: [

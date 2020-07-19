@@ -43,6 +43,51 @@ class Products with ChangeNotifier {
     }
   }
 
+  Future<String> updateProduct(Product productData) async {
+    final headers = {
+      "content-type": "application/json",
+      'Authorization': 'Bearer ${user.token}'
+    };
+    final body = jsonEncode({
+      "title": productData.name,
+      "description": productData.description,
+      "size": productData.size.join(" "),
+      "price": productData.price + 0.00,
+      "color": productData.colors.join(" "),
+      "category": productData.category.keys.first,
+      "sub": productData.category[productData.category.keys.first].join(" "),
+      "images": productData.images.join(" "),
+      "designerCollection": productData.designerCollection,
+      "isNewProduct": productData.isNew,
+      "trending": productData.trends,
+    });
+    try {
+      print("prod is ${productData.id}");
+      final res = await http.put('$URI/products/${productData.id}',
+          body: body, headers: headers);
+      final result = jsonDecode(res.body);
+      print(result);
+      return result[0]["msg"];
+    } catch (err) {
+      print("error from provide $err");
+      return err["msg"];
+    }
+  }
+
+  Future<void> deleteProduct(String id) async {
+    try {
+      final headers = {
+        "content-type": "application/json",
+        'Authorization': 'Bearer ${user.token}'
+      };
+      final res = await http.delete('$URI/products/${id}', headers: headers);
+      final resbody = jsonDecode(res.body);
+      print(resbody);
+    } catch (err) {
+      print(err);
+    }
+  }
+
   Future<void> fetAndSetProducts() async {
     try {
       final headers = {"content-type": "application/json"};

@@ -9,11 +9,10 @@ import 'package:flutter/services.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-class SuccessPage extends StatelessWidget {
-  static const routeName = '/success-page';
+class DeletedPage extends StatelessWidget {
+  static const routeName = '/deleted-page';
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark.copyWith();
@@ -22,7 +21,7 @@ class SuccessPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              'Success',
+              'Deleted',
               style: GoogleFonts.roboto(
                   color: Color(KOTPButtonBGColor),
                   fontSize: 21,
@@ -80,9 +79,7 @@ class SuccessPage extends StatelessWidget {
               ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: width * 0.7),
                 child: Text(
-                  args == "bio"
-                      ? "Profile updated successfully"
-                      : "Product is updated across all the devices",
+                  "Product is Deleted across all the devices",
                   style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w400,
                       color: Color(KOTPButtonBGColor).withOpacity(0.6),

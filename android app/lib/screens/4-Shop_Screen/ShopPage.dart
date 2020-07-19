@@ -79,7 +79,7 @@ class _ShopPageState extends State<ShopPage> {
           builder: (context) => AllProducts(
 //            products: _products.products,
             onFavouritesPressed: widget.onFavouritesPressed,
-            onCartPressed: widget.onFavouritesPressed,
+            onCartPressed: widget.onCartPressed,
           ),
         ));
   }

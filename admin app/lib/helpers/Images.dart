@@ -54,3 +54,4 @@ const String CONTENT = 'assets/flare/content_loading.flr';
 const String TEDDY = 'assets/flare/teddy.flr';
 const String ANCIENT = 'assets/flare/ANCIENT.flr';
 const String TREE = 'assets/flare/tree.flr';
+const String CODING = 'assets/flare/coding.flr';
