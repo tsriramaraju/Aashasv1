@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "server": "npm start --prefix server"
+    "server": "npm start --prefix server",
+    "webApp": "npm start --prefix webapp"
   }
 }
