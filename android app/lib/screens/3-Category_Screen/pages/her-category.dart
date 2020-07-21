@@ -60,7 +60,7 @@ class HerCategory extends StatelessWidget {
           ],
         ),
         body: Container(
-          padding: EdgeInsets.all(25),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           height: height,
           width: width,
           child: ListView(
@@ -69,27 +69,33 @@ class HerCategory extends StatelessWidget {
               SizedBox(
                 height: height * 0.04,
               ),
-              HeroCategoryImgBlock(
-                onTap: () => _goToShop(context, 'wedding'),
-                height: height,
-                image: KCategoryFemaleImg,
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.asset(
+                    KHERCARD,
+                    height: 350,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  )),
               SizedBox(
                 height: height * 0.02,
               ),
               HeroTextBlock(
                 height: height,
                 title: KFemaleCSHeroTitle1Text,
-                description: KMaleCSHeroDescription1Text,
+                description: "",
               ),
               SizedBox(
                 height: height * 0.04,
               ),
-              HeroCategoryImgBlock(
-                onTap: () => _goToShop(context, 'lehengas'),
-                height: height,
-                image: KCategoryMaleImg,
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.asset(
+                    KHERCARD2,
+                    height: 350,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  )),
               SizedBox(
                 height: height * 0.02,
               ),
@@ -138,7 +144,7 @@ class HerCategory extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   MiniCategoryBlock(
-                    onTap: () => _goToShop(context, 'party wear'),
+                    onTap: () => _goToShop(context, 'wedding'),
                     width: width,
                     height: height,
                     title: KFemaleCSCat3Text,

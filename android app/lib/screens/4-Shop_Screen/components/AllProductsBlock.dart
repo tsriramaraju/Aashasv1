@@ -3,6 +3,7 @@ import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'ProductsTileSmall.dart';
 
@@ -58,23 +59,26 @@ class AllProductsBlock extends StatelessWidget {
             scrollDirection: Axis.vertical,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
+                mainAxisSpacing: 40,
                 crossAxisCount: 2,
                 childAspectRatio: 1 / 1.5),
             physics: BouncingScrollPhysics(),
             children: [
               ...items.map((index) {
-                return ProductsTile(
-                  id: index.id,
-                  onCartPressed: onCartPressed,
-                  onFavouritePressed: onFavouritePressed,
-                  height: height,
-                  width: width,
-                  title: index.name,
-                  img: index.images[0],
-                  isNew: index.isNew,
-                  isFavourite: index.isFavourite,
-                  price: index.price,
+                return ChangeNotifierProvider.value(
+                  value: index,
+                  child: ProductsTile(
+                    id: index.id,
+                    onCartPressed: onCartPressed,
+                    onFavouritePressed: onFavouritePressed,
+                    height: height,
+                    width: width,
+                    title: index.name,
+                    img: index.images[0],
+                    isNew: index.isNew,
+                    isFavourite: index.isFavourite,
+                    price: index.price,
+                  ),
                 );
               }).toList()
             ],

@@ -1,6 +1,7 @@
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/models/product-model.dart';
 import 'package:aashas/providers/Favourites.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -85,10 +86,15 @@ class _ProductCardsState extends State<ProductCards> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: Image.network(
-                        index,
-                        width: widget.width * 0.8,
+                      child: CachedNetworkImage(
+                        imageUrl: index,
                         fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                        placeholder: (context, url) => Flexible(
+                            child: FlareActor(
+                          LOADING,
+                          animation: "Loading",
+                        )),
                       ),
                     ),
                     Positioned(

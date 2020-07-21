@@ -1,5 +1,5 @@
 //region InitialScreen
-const String KOpeningImage = "assets/images/stock/4.jpg";
+const String KOpeningImage = "assets/images/stock/8.jpg";
 const String KLogoFull = "assets/svg/logos/logo_full.svg";
 //endregion
 
@@ -10,6 +10,12 @@ const String KWSCard3Img = 'assets/images/ashas/3.jpg';
 //endregion
 //region Category Screen
 const String KCategoryMaleImg = 'assets/images/png/men.png';
+const String KHIMCARD = 'assets/images/stock/1.jpg';
+const String KHIMCARD2 = 'assets/images/stock/2.jpg';
+const String KHERCARD = 'assets/images/stock/3.jpg';
+const String KHERCARD2 = 'assets/images/stock/5.jpg';
+const String KTHEMCARD = 'assets/images/stock/6.jpg';
+const String KTHEMCARD2 = 'assets/images/stock/7.jpg';
 const String KCategoryFemaleImg = 'assets/images/png/women.png';
 //endregion
 

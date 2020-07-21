@@ -236,18 +236,9 @@ class CategoryScreen extends StatelessWidget {
                               fit: StackFit.expand,
                               children: <Widget>[
                                 Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.asset(
-                                      KCategoryFemaleImg,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topCenter,
+                                  alignment: Alignment.center,
                                   child: Text(
-                                    KCSThemCardTitleText,
+                                    "for Kids",
                                     style: GoogleFonts.roboto(
                                         color: Color(
                                           KCSCardTitleColor,

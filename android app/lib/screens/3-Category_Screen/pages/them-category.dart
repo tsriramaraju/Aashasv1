@@ -55,7 +55,7 @@ class ThemCategory extends StatelessWidget {
           ],
         ),
         body: Container(
-          padding: EdgeInsets.all(25),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           height: height,
           width: width,
           child: ListView(
@@ -64,27 +64,33 @@ class ThemCategory extends StatelessWidget {
               SizedBox(
                 height: height * 0.04,
               ),
-              HeroCategoryImgBlock(
-                onTap: () => _goToShop(context, 'party wear'),
-                height: height,
-                image: KCategoryMaleImg,
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.asset(
+                    KTHEMCARD,
+                    height: 350,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  )),
               SizedBox(
                 height: height * 0.02,
               ),
               HeroTextBlock(
                 height: height,
                 title: KThemCSHeroTitle1Text,
-                description: KMaleCSHeroDescription1Text,
+                description: "",
               ),
               SizedBox(
                 height: height * 0.04,
               ),
-              HeroCategoryImgBlock(
-                onTap: () => _goToShop(context, 'casuals'),
-                height: height,
-                image: KCategoryMaleImg,
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.asset(
+                    KTHEMCARD2,
+                    height: 350,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  )),
               SizedBox(
                 height: height * 0.02,
               ),
@@ -111,7 +117,7 @@ class ThemCategory extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   MiniCategoryBlock(
-                    onTap: () => _goToShop(context, 'party wear'),
+                    onTap: () => _goToShop(context, 'casuals'),
                     width: width,
                     height: height,
                     title: KThemCSCat1Text,

@@ -50,6 +50,9 @@ class TopTrendsBlock extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(
+          height: 5,
+        ),
         Container(
           height: height * 0.15,
           child: GridView(

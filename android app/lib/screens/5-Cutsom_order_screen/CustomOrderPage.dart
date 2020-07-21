@@ -86,13 +86,6 @@ class _CustomOrderPageState extends State<CustomOrderPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Wish List',
-                        style: GoogleFonts.roboto(
-                            color: Color(KOTPButtonBGColor),
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Text(
                         '${orders.length} orders found',
                         style: GoogleFonts.roboto(
                             color: Color(KOTPButtonBGColor).withOpacity(0.5),

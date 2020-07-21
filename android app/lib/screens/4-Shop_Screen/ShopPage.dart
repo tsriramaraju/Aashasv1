@@ -91,7 +91,7 @@ class _ShopPageState extends State<ShopPage> {
       children: [
         ShopOfferBanner(widget: widget, banner: banners),
         Container(
-          height: widget.height * 0.70,
+          height: widget.height * 0.725,
           child: isLoading
               ? Container(
                   width: widget.width * .8,

@@ -60,8 +60,9 @@ class _ProductPageState extends State<ProductPage> {
     final prods = Provider.of<Products>(context);
     await prods.fetAndSetProducts();
     final favs = Provider.of<Favourites>(context);
+
 //    await favs.fetchAndSetFavourites();
-//    prods.products.map((e) => print(e.name));
+
     item = prods.products.firstWhere((element) => element.id == widget.id);
     setState(() {
       isLoading = false;
@@ -142,7 +143,7 @@ class _ProductPageState extends State<ProductPage> {
             ),
             backgroundColor: Color(KNavBGColor),
             body: Container(
-              height: height * 0.81,
+              height: height * 0.85,
               child: ListView(
                 padding: EdgeInsets.all(15),
                 physics: BouncingScrollPhysics(),

@@ -28,7 +28,10 @@ class HeroCategoryImgBlock extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Image.asset(image),
+        child: Image.asset(
+          image,
+          fit: BoxFit.fitWidth,
+        ),
         alignment: Alignment.bottomCenter,
       ),
     );

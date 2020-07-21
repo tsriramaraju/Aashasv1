@@ -1,6 +1,7 @@
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/providers/CartData.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -82,10 +83,15 @@ class _CartItemTileState extends State<CartItemTile> {
                           animation: "Error",
                         ),
                       )
-                    : Image.network(
-                        widget.img,
-                        width: widget.width * 0.3,
+                    : CachedNetworkImage(
+                        imageUrl: widget.img,
                         fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                        placeholder: (context, url) => Flexible(
+                            child: FlareActor(
+                          LOADING,
+                          animation: "Loading",
+                        )),
                       ),
               ),
               SizedBox(
@@ -99,12 +105,15 @@ class _CartItemTileState extends State<CartItemTile> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          widget.title,
-                          style: GoogleFonts.raleway(
-                              color: Color(KOTPButtonBGColor),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700),
+                        Container(
+                          width: 180,
+                          child: Text(
+                            widget.title,
+                            style: GoogleFonts.raleway(
+                                color: Color(KOTPButtonBGColor),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700),
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: 10),

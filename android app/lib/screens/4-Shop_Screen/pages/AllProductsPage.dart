@@ -29,7 +29,6 @@ class AllProducts extends StatefulWidget {
 }
 
 class _AllProductsState extends State<AllProducts> {
-//  final productsData = Products();
   List<Product> items;
   String filter;
 
@@ -57,10 +56,12 @@ class _AllProductsState extends State<AllProducts> {
   }
 
   Future<void> loadItems() async {
+    setState(() {
+      isLoading = true;
+    });
     final prods = Provider.of<Products>(context);
-
-    items = prods.filterProducts(widget.filter, subFilter: widget.subFilter);
     if (items == []) await prods.fetAndSetProducts();
+    items = prods.filterProducts(widget.filter, subFilter: widget.subFilter);
     setState(() {
       itemsCount = items.length;
       isLoading = false;

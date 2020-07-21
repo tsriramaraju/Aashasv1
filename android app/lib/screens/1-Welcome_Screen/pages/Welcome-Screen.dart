@@ -36,7 +36,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 options: CarouselOptions(
                   enableInfiniteScroll: false,
                   autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 6),
+                  autoPlayInterval: Duration(seconds: 2),
                   autoPlayAnimationDuration: Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
 //                pauseAutoPlayOnTouch: Duration(seconds: 10),

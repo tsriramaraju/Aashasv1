@@ -1,5 +1,7 @@
 import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,10 +40,16 @@ class FavouriteItemTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                img,
-                width: width * 0.3,
+              child: CachedNetworkImage(
+                imageUrl: img,
                 fit: BoxFit.cover,
+                width: width * 0.3,
+                alignment: Alignment.topCenter,
+                placeholder: (context, url) => Flexible(
+                    child: FlareActor(
+                  LOADING,
+                  animation: "Loading",
+                )),
               ),
             ),
             SizedBox(

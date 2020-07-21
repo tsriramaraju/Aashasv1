@@ -1,6 +1,8 @@
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/providers/Products_Provider.dart';
 import 'package:aashas/providers/desginer.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -72,9 +74,15 @@ class _DesignerPageState extends State<DesignerPage> {
         elevation: 0,
       ),
       body: isLoading
-          ? CircularProgressIndicator()
+          ? Container(
+              height: height * 0.8,
+              child: FlareActor(
+                CODING,
+                animation: "coding",
+              ),
+            )
           : Container(
-              height: height * 0.81,
+              height: height * 0.85,
               child: ListView(
                 padding: EdgeInsets.all(15),
                 physics: BouncingScrollPhysics(),
@@ -124,41 +132,7 @@ class _DesignerPageState extends State<DesignerPage> {
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           children: [
-//                            ...blogs.map(
-//                              (e) => Container(
-//                                width: width * .5,
-//                                decoration: BoxDecoration(
-//                                    color: Colors.deepPurple.withOpacity(0.5),
-//                                    borderRadius: BorderRadius.circular(15)),
-//                                child: Row(
-//                                  mainAxisAlignment:
-//                                      MainAxisAlignment.spaceAround,
-//                                  children: [
-//                                    SizedBox(
-//                                      width: 0.05,
-//                                    ),
-//                                    Icon(
-//                                      FontAwesomeIcons.tshirt,
-//                                      color: Colors.white,
-//                                    ),
-//                                    SizedBox(
-//                                      width: 0.05,
-//                                    ),
-//                                    ConstrainedBox(
-//                                      constraints:
-//                                          BoxConstraints(maxWidth: width * 0.3),
-//                                      child: Text(
-//                                        e["title"],
-//                                        style: GoogleFonts.roboto(
-//                                            color: Colors.white,
-//                                            fontSize: 16,
-//                                            fontWeight: FontWeight.w500),
-//                                      ),
-//                                    )
-//                                  ],
-//                                ),
-//                              ),
-//                            ),
+//
                             Container(
                               width: width * .5,
                               decoration: BoxDecoration(

@@ -42,7 +42,7 @@ class Home extends StatelessWidget {
             top: height * 0.30,
             left: width * 0.1,
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 5),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 8),
               child: SvgPicture.asset(
                 KLogoFull,
                 fit: BoxFit.fitHeight,

@@ -1,6 +1,9 @@
+import 'package:aashas/helpers/constants/Images.dart';
 import 'package:aashas/helpers/constants/colors.dart';
 import 'package:aashas/helpers/constants/text.dart';
 import 'package:aashas/screens/4-Shop_Screen/pages/ProductPage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,9 +52,17 @@ class ProductGridTileRectangle extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.network(
-                img,
+              child: CachedNetworkImage(
+                imageUrl: img,
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+                placeholder: (context, url) => Container(
+                    width: 50,
+                    height: 100,
+                    child: FlareActor(
+                      LOADING,
+                      animation: "Loading",
+                    )),
               ),
             ),
             SizedBox(

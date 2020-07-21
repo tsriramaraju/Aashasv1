@@ -53,9 +53,11 @@ class DesignerCollectionBlock extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(
+          height: 5,
+        ),
         Container(
-          height: height * 0.35,
-//          color: Colors.blueGrey,
+          height: height * 0.36,
           child: GridView(
             padding: EdgeInsets.only(left: 20),
             scrollDirection: Axis.horizontal,

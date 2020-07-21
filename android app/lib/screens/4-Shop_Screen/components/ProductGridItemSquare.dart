@@ -99,7 +99,12 @@ class _ProductGridTileSquareState extends State<ProductGridTileSquare> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? CircularProgressIndicator()
+        ? Flexible(
+            child: FlareActor(
+            LOADING,
+            animation: "loading",
+            fit: BoxFit.cover,
+          ))
         : InkWell(
             onTap: () => showProduct(context),
             child: Container(
@@ -116,6 +121,7 @@ class _ProductGridTileSquareState extends State<ProductGridTileSquare> {
                           child: CachedNetworkImage(
                             imageUrl: widget.img,
                             fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
                             placeholder: (context, url) => Flexible(
                                 child: FlareActor(
                               LOADING,
@@ -187,17 +193,26 @@ class _ProductGridTileSquareState extends State<ProductGridTileSquare> {
                     height: 5,
                   ),
                   Text(
-                    '   ${widget.title}',
+                    '${widget.title}',
                     style: GoogleFonts.roboto(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        height: 1.2,
+                        wordSpacing: 3),
+                    textAlign: TextAlign.center,
                   ),
-                  Text(
-                    '    \$${widget.price.toString()}',
-                    style: GoogleFonts.roboto(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w300,
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '\$${widget.price.toString()}',
+                      style: GoogleFonts.roboto(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
