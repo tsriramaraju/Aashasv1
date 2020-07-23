@@ -38,9 +38,9 @@ class Home extends StatelessWidget {
           ),
           Positioned(
             height: height * 0.2,
-            width: width * 0.8,
+            width: width * 0.9,
             top: height * 0.30,
-            left: width * 0.1,
+            left: width * 0.05,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 8),
               child: SvgPicture.asset(

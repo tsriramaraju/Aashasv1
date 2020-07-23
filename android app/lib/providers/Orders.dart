@@ -87,12 +87,14 @@ class Orders with ChangeNotifier {
       };
       final res = await http.get('$URI/orders/get', headers: headers);
       final result = jsonDecode(res.body);
-      print(result[0]["price"]["totalAmount"]);
+      print(result[0]["mobile"]);
       final List<Order> loadedOrders = [];
+
       result.forEach((e) => {
             loadedOrders.add(Order(
                 mobile: e["mobile"],
-                img: e["items"][0]["images"][0],
+                // img: e["items"].first["images"].first,
+                img: e["items"].first["images"].first,
 //              items: e["items"] as List<Map<String, dynamic>>,
 //              address: e["address"] as Map<String, Map<String, String>>,
                 estDelivery: DateTime.parse(e["estDelivery"]),
@@ -102,14 +104,48 @@ class Orders with ChangeNotifier {
 //              payment: e["payment"] as Map<String, Map<String, String>>,
                 ))
           });
+      print("loaded orders $loadedOrders \n\n\\n\n\n\n");
       _items = loadedOrders;
 
-      print(result);
+      print("orders are $result");
       notifyListeners();
     } catch (err) {
-      print(err);
+      print("order page error $err");
     }
   }
+//   Future<void> fetchAndSetOrders() async {
+//     try {
+//       final headers = {
+//         "content-type": "application/json",
+//         'Authorization': 'Bearer ${user.token}'
+//       };
+//       final res = await http.get('$URI/orders/get', headers: headers);
+//       final result = jsonDecode(res.body);
+//       // print(result[0]["price"]["totalAmount"]);
+//       final List<Order> loadedOrders = [];
+//       result.forEach((e) => {
+//             loadedOrders.add(Order(
+//                 mobile: e["mobile"],
+//                 img: e["items"][0]["images"][0],
+// //              items: e["items"] as List<Map<String, dynamic>>,
+// //              address: e["address"] as Map<String, Map<String, String>>,
+//                 estDelivery: DateTime.parse(e["estDelivery"]),
+//                 orderedData: DateTime.parse(e["orderedDate"]),
+//                 status: e["status"],
+//                 price: e["price"]["totalAmount"]
+// //              payment: e["payment"] as Map<String, Map<String, String>>,
+//                 ))
+//           });
+//       _items = loadedOrders;
+//       print("orders fetch and set called $result");
+//       print("orders fetch and set called ${_items}");
+//       print("orders fetch and set called $loadedOrders");
+
+//       notifyListeners();
+//     } catch (err) {
+//       print(err);
+//     }
+//   }
 
   List<Order> get orders {
     return [..._items];

@@ -121,7 +121,7 @@ class _ProductsTileState extends State<ProductsTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: widget.height * .32,
+                    height: widget.height * .3,
                     child: Stack(
                       fit: StackFit.expand,
                       children: [

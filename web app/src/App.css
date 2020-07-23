@@ -462,6 +462,7 @@ a {
 
 .profile-img {
   width: 35%;
+  margin-left: 20px;
   min-width: 300px;
   height: 100%;
   -webkit-box-shadow: 0 5px 18px rgba(0, 0, 0, 0.6);
@@ -489,6 +490,7 @@ a {
 
 .bio {
   width: 60%;
+  padding: 40px 10px 10px 10px;
   height: 80%;
   font-size: 2rem;
   font-family: 'Tangerine', cursive;

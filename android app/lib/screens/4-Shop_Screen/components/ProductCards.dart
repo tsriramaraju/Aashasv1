@@ -85,18 +85,11 @@ class _ProductCardsState extends State<ProductCards> {
                   fit: StackFit.loose,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: CachedNetworkImage(
-                        imageUrl: index,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                        placeholder: (context, url) => Flexible(
-                            child: FlareActor(
-                          LOADING,
-                          animation: "Loading",
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                          index,
+                          alignment: Alignment.topCenter,
                         )),
-                      ),
-                    ),
                     Positioned(
                       right: 5,
                       bottom: 5,

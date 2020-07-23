@@ -40,10 +40,11 @@ class _CustomOrderPageState extends State<CustomOrderPage> {
 
   List<Order> orders = [];
   Future<void> loadItems() async {
+    print("Orders init state");
     final ords = Provider.of<Orders>(context);
-
     await ords.fetchAndSetOrders();
     orders = ords.orders;
+    print("orders are $orders");
     setState(() {
       isLoading = false;
     });
