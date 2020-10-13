@@ -9,7 +9,14 @@ This application is a complete ecommerce suite for clothing boutique. where all 
 
 This is my first project, i would like to know how my coding standards are. thank you
 
+live link :https://aashas.netlify.app/
+
+servver link : https://aashas.herokuapp.com/
+
+if possible the apk's are available in the repo.
+
 (just added this part in github readme :))
+
 
 
 
