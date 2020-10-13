@@ -5,7 +5,7 @@ plz watch with video to know the project :-
 
 https://youtu.be/V-L3nmxSCAY
 
-This application is a complete ecommerce suite for clothing boutique. where all the heavy work is done in server coding and mobile flutter app.The website isn't very complex it's a simple website.
+This application is a complete ecommerce suite for clothing boutique. where all the heavy work is done in server coding and mobile flutter app.The website isn't very complex it's a simple website ( will be upgraded to PWA in version 2).
 
 This is my first project, i would like to know how my coding standards are and how it can improved for large scale production level. Thank you
 
