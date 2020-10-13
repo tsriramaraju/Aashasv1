@@ -9,6 +9,8 @@ This application is a complete ecommerce suite for clothing boutique. where all 
 
 This is my first project, i would like to know how my coding standards are. thank you
 
+(just added this part in github readme :))
+
 
 
 
