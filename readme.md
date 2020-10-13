@@ -7,11 +7,11 @@ https://youtu.be/V-L3nmxSCAY
 
 This application is a complete ecommerce suite for clothing boutique. where all the heavy work is done in server coding and mobile flutter app.The website isn't very complex it's a simple website.
 
-This is my first project, i would like to know how my coding standards are. thank you
+This is my first project, i would like to know how my coding standards are and how it can improved for large scale production level. Thank you
 
 live link :https://aashas.netlify.app/
 
-servver link : https://aashas.herokuapp.com/
+server link : https://aashas.herokuapp.com/
 
 if possible the apk's are available in the repo.
 
